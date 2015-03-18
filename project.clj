@@ -6,6 +6,13 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/java.jdbc "0.3.2"]
                  [postgresql "9.1-901.jdbc4"]
+                 [ring/ring-core "1.3.2"]
+                 [ring/ring-defaults "0.1.4"]
+                 [ring/ring-jetty-adapter "1.3.2"]
+                 [compojure "1.1.6"]
+                 [com.draines/postal "1.11.3"]
+                 [hiccup "1.0.4"]
+                 [crypto-random "1.2.0"]
                  [ragtime/ragtime.sql.files "0.3.8"]]
   :main ^:skip-aot glug.core
   :plugins [[ragtime/ragtime.lein "0.3.8"]]
