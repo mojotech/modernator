@@ -6,9 +6,13 @@
 (defn index []
   (page/html5
     [:head
-     [:title "Hello World"]]
+     [:title "Booze"]
+     (page/include-css "/public/css/main.css")]
     [:body
-     [:div {:id "content"} "Hello World"]]))
+     [:div {:id "app"}]
+     (page/include-js
+       "http://underscorejs.org/underscore.js"
+       "/public/js/app.js")]))
 
 (defn signup []
   (page/html5

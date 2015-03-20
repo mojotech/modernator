@@ -1,5 +1,6 @@
 (ns glug.core
   (require [compojure.core :refer [defroutes]]
+           [compojure.route :as route]
            [ring.adapter.jetty :as ring]
            [ring.middleware.params :as params]
            [ring.middleware.cookies :as cookies]
@@ -10,7 +11,8 @@
   (-> controllers/main
       controllers/auth
       cookies/wrap-cookies
-      params/wrap-params))
+      params/wrap-params)
+  (route/resources "/public"))
 
 (defn -main []
   (ring/run-jetty #'routes {:port 8080 :join? false}))
