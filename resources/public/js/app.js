@@ -60585,6 +60585,22 @@ goog.provide("glug.cs");
 goog.require("cljs.core");
 goog.require("om.dom");
 goog.require("om.core");
+glug.cs.meths = new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "get", "get", 1683182755), "GET", new cljs.core.Keyword(null, "put", "put", 1299772570), "PUT", new cljs.core.Keyword(null, "post", "post", 269697687), "POST", new cljs.core.Keyword(null, "delete", "delete", -1768633620), "DELETE"], null);
+glug.cs.edn_xhr = function glug$cs$edn_xhr(p__15421) {
+  var map__15423 = p__15421;
+  var map__15423__$1 = cljs.core.seq_QMARK_.call(null, map__15423) ? cljs.core.apply.call(null, cljs.core.hash_map, map__15423) : map__15423;
+  var on_complete = cljs.core.get.call(null, map__15423__$1, new cljs.core.Keyword(null, "on-complete", "on-complete", -1531183971));
+  var data = cljs.core.get.call(null, map__15423__$1, new cljs.core.Keyword(null, "data", "data", -232669377));
+  var url = cljs.core.get.call(null, map__15423__$1, new cljs.core.Keyword(null, "url", "url", 276297046));
+  var method = cljs.core.get.call(null, map__15423__$1, new cljs.core.Keyword(null, "method", "method", 55703592));
+  var xhr = new glug.cs.XhrIo;
+  events.listen.call(null, xhr, goog.net.EventType.COMPLETE, function(xhr, map__15423, map__15423__$1, on_complete, data, url, method) {
+    return function(e) {
+      return on_complete.call(null, reader.read_string.call(null, xhr.getResponseText()));
+    };
+  }(xhr, map__15423, map__15423__$1, on_complete, data, url, method));
+  return xhr.send(url, glug.cs.meths.call(null, method), cljs.core.truth_(data) ? cljs.core.pr_str.call(null, data) : null, {"Content-Type":"application/edn"});
+};
 glug.cs.sort_by_votes = function glug$cs$sort_by_votes(beer_map) {
   return cljs.core.into.call(null, cljs.core.PersistentVector.EMPTY, cljs.core.sort_by.call(null, new cljs.core.Keyword(null, "votes", "votes", -1161459422), cljs.core._GT_, beer_map));
 };
@@ -60604,8 +60620,8 @@ glug.cs.position = function glug$cs$position(is_needle_QMARK_, haystack) {
     if (cljs.core.truth_(is_needle_QMARK_.call(null, cljs.core.get.call(null, haystack, i)))) {
       return i + 1;
     } else {
-      var G__15404 = i + 1;
-      i = G__15404;
+      var G__15424 = i + 1;
+      i = G__15424;
       continue;
     }
     break;
@@ -60614,90 +60630,90 @@ glug.cs.position = function glug$cs$position(is_needle_QMARK_, haystack) {
 glug.cs.placement = function glug$cs$placement(beer) {
   var sorted_beers = glug.cs.sort_by_votes.call(null, (new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361)).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null, glug.cs.app_state)));
   var beer_position = glug.cs.position.call(null, function(sorted_beers) {
-    return function(p1__15405_SHARP_) {
-      return cljs.core._EQ_.call(null, (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(beer), (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(p1__15405_SHARP_));
+    return function(p1__15425_SHARP_) {
+      return cljs.core._EQ_.call(null, (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(beer), (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(p1__15425_SHARP_));
     };
   }(sorted_beers), sorted_beers);
   return 16 * beer_position;
 };
 glug.cs.beer_view = function glug$cs$beer_view(beer, owner) {
-  if (typeof glug.cs.t15410 !== "undefined") {
+  if (typeof glug.cs.t15430 !== "undefined") {
   } else {
-    glug.cs.t15410 = function(owner, beer, beer_view, meta15411) {
+    glug.cs.t15430 = function(owner, beer, beer_view, meta15431) {
       this.owner = owner;
       this.beer = beer;
       this.beer_view = beer_view;
-      this.meta15411 = meta15411;
+      this.meta15431 = meta15431;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t15410.prototype.om$core$IRender$ = true;
-    glug.cs.t15410.prototype.om$core$IRender$render$arity$1 = function(_) {
+    glug.cs.t15430.prototype.om$core$IRender$ = true;
+    glug.cs.t15430.prototype.om$core$IRender$render$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return React.DOM.li(null, (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(self__.beer), " (", (new cljs.core.Keyword(null, "votes", "votes", -1161459422)).cljs$core$IFn$_invoke$arity$1(self__.beer), ")", React.DOM.button({"onClick":function(___$1) {
-        return function(p1__15406_SHARP_) {
-          return glug.cs.upvote_beer_BANG_.call(null, p1__15406_SHARP_, self__.beer);
+        return function(p1__15426_SHARP_) {
+          return glug.cs.upvote_beer_BANG_.call(null, p1__15426_SHARP_, self__.beer);
         };
       }(___$1)}, "Vote"));
     };
-    glug.cs.t15410.prototype.cljs$core$IMeta$_meta$arity$1 = function(_15412) {
+    glug.cs.t15430.prototype.cljs$core$IMeta$_meta$arity$1 = function(_15432) {
       var self__ = this;
-      var _15412__$1 = this;
-      return self__.meta15411;
+      var _15432__$1 = this;
+      return self__.meta15431;
     };
-    glug.cs.t15410.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_15412, meta15411__$1) {
+    glug.cs.t15430.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_15432, meta15431__$1) {
       var self__ = this;
-      var _15412__$1 = this;
-      return new glug.cs.t15410(self__.owner, self__.beer, self__.beer_view, meta15411__$1);
+      var _15432__$1 = this;
+      return new glug.cs.t15430(self__.owner, self__.beer, self__.beer_view, meta15431__$1);
     };
-    glug.cs.t15410.cljs$lang$type = true;
-    glug.cs.t15410.cljs$lang$ctorStr = "glug.cs/t15410";
-    glug.cs.t15410.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t15410");
+    glug.cs.t15430.cljs$lang$type = true;
+    glug.cs.t15430.cljs$lang$ctorStr = "glug.cs/t15430";
+    glug.cs.t15430.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t15430");
     };
-    glug.cs.__GT_t15410 = function glug$cs$beer_view_$___GT_t15410(owner__$1, beer__$1, beer_view__$1, meta15411) {
-      return new glug.cs.t15410(owner__$1, beer__$1, beer_view__$1, meta15411);
+    glug.cs.__GT_t15430 = function glug$cs$beer_view_$___GT_t15430(owner__$1, beer__$1, beer_view__$1, meta15431) {
+      return new glug.cs.t15430(owner__$1, beer__$1, beer_view__$1, meta15431);
     };
   }
-  return new glug.cs.t15410(owner, beer, glug$cs$beer_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t15430(owner, beer, glug$cs$beer_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 glug.cs.beer_list_view = function glug$cs$beer_list_view(data, owner) {
-  if (typeof glug.cs.t15416 !== "undefined") {
+  if (typeof glug.cs.t15436 !== "undefined") {
   } else {
-    glug.cs.t15416 = function(owner, data, beer_list_view, meta15417) {
+    glug.cs.t15436 = function(owner, data, beer_list_view, meta15437) {
       this.owner = owner;
       this.data = data;
       this.beer_list_view = beer_list_view;
-      this.meta15417 = meta15417;
+      this.meta15437 = meta15437;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t15416.prototype.om$core$IRender$ = true;
-    glug.cs.t15416.prototype.om$core$IRender$render$arity$1 = function(_) {
+    glug.cs.t15436.prototype.om$core$IRender$ = true;
+    glug.cs.t15436.prototype.om$core$IRender$render$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return React.DOM.div(null, React.DOM.h1(null, "Beer List"), cljs.core.apply.call(null, om.dom.ul, {"className":"beer-list"}, om.core.build_all.call(null, glug.cs.beer_view, glug.cs.sort_by_votes.call(null, (new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361)).cljs$core$IFn$_invoke$arity$1(self__.data)))));
     };
-    glug.cs.t15416.prototype.cljs$core$IMeta$_meta$arity$1 = function(_15418) {
+    glug.cs.t15436.prototype.cljs$core$IMeta$_meta$arity$1 = function(_15438) {
       var self__ = this;
-      var _15418__$1 = this;
-      return self__.meta15417;
+      var _15438__$1 = this;
+      return self__.meta15437;
     };
-    glug.cs.t15416.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_15418, meta15417__$1) {
+    glug.cs.t15436.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_15438, meta15437__$1) {
       var self__ = this;
-      var _15418__$1 = this;
-      return new glug.cs.t15416(self__.owner, self__.data, self__.beer_list_view, meta15417__$1);
+      var _15438__$1 = this;
+      return new glug.cs.t15436(self__.owner, self__.data, self__.beer_list_view, meta15437__$1);
     };
-    glug.cs.t15416.cljs$lang$type = true;
-    glug.cs.t15416.cljs$lang$ctorStr = "glug.cs/t15416";
-    glug.cs.t15416.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t15416");
+    glug.cs.t15436.cljs$lang$type = true;
+    glug.cs.t15436.cljs$lang$ctorStr = "glug.cs/t15436";
+    glug.cs.t15436.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t15436");
     };
-    glug.cs.__GT_t15416 = function glug$cs$beer_list_view_$___GT_t15416(owner__$1, data__$1, beer_list_view__$1, meta15417) {
-      return new glug.cs.t15416(owner__$1, data__$1, beer_list_view__$1, meta15417);
+    glug.cs.__GT_t15436 = function glug$cs$beer_list_view_$___GT_t15436(owner__$1, data__$1, beer_list_view__$1, meta15437) {
+      return new glug.cs.t15436(owner__$1, data__$1, beer_list_view__$1, meta15437);
     };
   }
-  return new glug.cs.t15416(owner, data, glug$cs$beer_list_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t15436(owner, data, glug$cs$beer_list_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 om.core.root.call(null, glug.cs.beer_list_view, glug.cs.app_state, new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "target", "target", 253001721), document.getElementById("app")], null));
