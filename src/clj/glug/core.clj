@@ -5,6 +5,7 @@
            [ring.middleware.params :as params]
            [ring.middleware.json :as json]
            [ring.middleware.cookies :as cookies]
+           [ring.middleware.transit :refer [wrap-transit-response]]
            [glug.controllers.main :as controllers])
   (:gen-class))
 
@@ -13,6 +14,7 @@
       controllers/auth
       cookies/wrap-cookies
       json/wrap-json-response
+      wrap-transit-response
       params/wrap-params)
   (route/resources "/public"))
 

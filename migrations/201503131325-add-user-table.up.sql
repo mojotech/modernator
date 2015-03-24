@@ -10,6 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE votes (
   id          serial primary key,
+  crowd_id    integer NOT NULL,
   user_id     integer NOT NULL,
   beer_id     integer NOT NULL,
   created_at  timestamp default current_timestamp

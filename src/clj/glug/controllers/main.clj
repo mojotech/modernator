@@ -1,5 +1,5 @@
 (ns glug.controllers.main
-  (:require [compojure.core :refer [defroutes GET POST]]
+  (:require [compojure.core :refer [defroutes GET POST PUT]]
             [clojure.walk :refer [keywordize-keys]]
             [ring.util.response :as ring]
             [postal.core :as postal]
@@ -66,11 +66,30 @@
                    "auth-token" {:value (:auth_token user) :path "/"}}}))))
 
 (defn beers-index [req]
-  (ring/response
-    (map
-      #(models/beer-find (:untappd_id %))
-      (models/crowd-beers
-        (:crowd_id (models/user-find "id" (Integer. (:value (get (:cookies req) "user-id")))))))))
+  (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
+        crowd-id (:crowd_id (models/user-find "id" user-id))
+        beers (models/crowd-beers crowd-id)
+        votes (models/crowd-votes crowd-id)]
+    (ring/response
+      (map
+        #(let [beer-votes (filter (fn [vote] (= (:beer_id vote) (:id %))) votes)
+               user-upvoted? (some (fn [vote] (= (:user_id vote) user-id)) beer-votes)
+               beer-info (models/beer-find (:id %))
+               ]
+           (assoc (merge % beer-info)
+                  :votes (count beer-votes) :upvoted user-upvoted?))
+        beers))))
+
+(defn vote-toggle [req]
+  (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
+        beer-id (Integer. (get-in req [:params :beer_id]))
+        crowd-id (:crowd_id (models/user-find "id" user-id))
+        user (models/user-find "id" user-id)
+        vote (models/vote-find crowd-id beer-id user-id)]
+    (if (nil? vote)
+      (models/vote-create {:crowd_id crowd-id :beer_id beer-id :user_id user-id})
+      (models/vote-delete (:id vote)))
+    {:status 200}))
 
 (def public-uri-bases #{"/signup" "/confirm-"})
 
@@ -88,11 +107,12 @@
         (ring/redirect "/signup")))))
 
 (defroutes main
-  (GET "/" [] (views/index))
-  (GET "/beers" req (beers-index req))
-
   (GET "/signup" [] (views/signup))
   (POST "/signup" req (crowd-create req))
   (GET "/signup-confirm" [] (views/signup-confirm))
   (GET "/confirm-crowd/:auth-token" [auth-token] (crowd-activate auth-token))
-  (GET "/confirm-user/:auth-token" [auth-token] (user-activate auth-token)))
+  (GET "/confirm-user/:auth-token" [auth-token] (user-activate auth-token))
+
+  (GET "/" [] (views/index))
+  (GET "/beers" req (beers-index req))
+  (PUT "/votes/:beer_id" req (vote-toggle req)))

@@ -72464,101 +72464,100 @@ if (typeof glug.cs.app_state !== "undefined") {
   glug.cs.app_state = cljs.core.atom.call(null, new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361), cljs.core.PersistentVector.EMPTY], null));
 }
 glug.cs.upvote_beer_BANG_ = function glug$cs$upvote_beer_BANG_(e, beer) {
-  return om.core.update_BANG_.call(null, beer, cljs.core.merge.call(null, beer, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092), cljs.core.not.call(null, (new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092)).cljs$core$IFn$_invoke$arity$1(beer)), new cljs.core.Keyword(null, "votes", "votes", -1161459422), cljs.core.truth_((new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092)).cljs$core$IFn$_invoke$arity$1(beer)) ? (new cljs.core.Keyword(null, 
+  om.core.update_BANG_.call(null, beer, cljs.core.merge.call(null, beer, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092), cljs.core.not.call(null, (new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092)).cljs$core$IFn$_invoke$arity$1(beer)), new cljs.core.Keyword(null, "votes", "votes", -1161459422), cljs.core.truth_((new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092)).cljs$core$IFn$_invoke$arity$1(beer)) ? (new cljs.core.Keyword(null, 
   "votes", "votes", -1161459422)).cljs$core$IFn$_invoke$arity$1(beer) - 1 : (new cljs.core.Keyword(null, "votes", "votes", -1161459422)).cljs$core$IFn$_invoke$arity$1(beer) + 1], null)));
+  return ajax.core.PUT.call(null, [cljs.core.str("votes/"), cljs.core.str((new cljs.core.Keyword(null, "id", "id", -1388402092)).cljs$core$IFn$_invoke$arity$1(beer))].join(""), new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "error-handler", "error-handler", -484945776), function() {
+    return om.core.update_BANG_.call(null, beer, beer);
+  }], null));
 };
 glug.cs.beer_view = function glug$cs$beer_view(beer, owner) {
-  if (typeof glug.cs.t8568 !== "undefined") {
+  if (typeof glug.cs.t8808 !== "undefined") {
   } else {
-    glug.cs.t8568 = function(owner, beer, beer_view, meta8569) {
+    glug.cs.t8808 = function(owner, beer, beer_view, meta8809) {
       this.owner = owner;
       this.beer = beer;
       this.beer_view = beer_view;
-      this.meta8569 = meta8569;
+      this.meta8809 = meta8809;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t8568.prototype.om$core$IRender$ = true;
-    glug.cs.t8568.prototype.om$core$IRender$render$arity$1 = function(_) {
+    glug.cs.t8808.prototype.om$core$IRender$ = true;
+    glug.cs.t8808.prototype.om$core$IRender$render$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return React.DOM.li(null, (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(self__.beer), " (", (new cljs.core.Keyword(null, "votes", "votes", -1161459422)).cljs$core$IFn$_invoke$arity$1(self__.beer), ")", React.DOM.button({"onClick":function(___$1) {
-        return function(p1__8564_SHARP_) {
-          return glug.cs.upvote_beer_BANG_.call(null, p1__8564_SHARP_, self__.beer);
+        return function(p1__8804_SHARP_) {
+          return glug.cs.upvote_beer_BANG_.call(null, p1__8804_SHARP_, self__.beer);
         };
       }(___$1)}, "Vote"));
     };
-    glug.cs.t8568.prototype.cljs$core$IMeta$_meta$arity$1 = function(_8570) {
+    glug.cs.t8808.prototype.cljs$core$IMeta$_meta$arity$1 = function(_8810) {
       var self__ = this;
-      var _8570__$1 = this;
-      return self__.meta8569;
+      var _8810__$1 = this;
+      return self__.meta8809;
     };
-    glug.cs.t8568.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_8570, meta8569__$1) {
+    glug.cs.t8808.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_8810, meta8809__$1) {
       var self__ = this;
-      var _8570__$1 = this;
-      return new glug.cs.t8568(self__.owner, self__.beer, self__.beer_view, meta8569__$1);
+      var _8810__$1 = this;
+      return new glug.cs.t8808(self__.owner, self__.beer, self__.beer_view, meta8809__$1);
     };
-    glug.cs.t8568.cljs$lang$type = true;
-    glug.cs.t8568.cljs$lang$ctorStr = "glug.cs/t8568";
-    glug.cs.t8568.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t8568");
+    glug.cs.t8808.cljs$lang$type = true;
+    glug.cs.t8808.cljs$lang$ctorStr = "glug.cs/t8808";
+    glug.cs.t8808.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t8808");
     };
-    glug.cs.__GT_t8568 = function glug$cs$beer_view_$___GT_t8568(owner__$1, beer__$1, beer_view__$1, meta8569) {
-      return new glug.cs.t8568(owner__$1, beer__$1, beer_view__$1, meta8569);
+    glug.cs.__GT_t8808 = function glug$cs$beer_view_$___GT_t8808(owner__$1, beer__$1, beer_view__$1, meta8809) {
+      return new glug.cs.t8808(owner__$1, beer__$1, beer_view__$1, meta8809);
     };
   }
-  return new glug.cs.t8568(owner, beer, glug$cs$beer_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t8808(owner, beer, glug$cs$beer_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 glug.cs.beer_list_view = function glug$cs$beer_list_view(data, owner) {
-  if (typeof glug.cs.t8575 !== "undefined") {
+  if (typeof glug.cs.t8815 !== "undefined") {
   } else {
-    glug.cs.t8575 = function(owner, data, beer_list_view, meta8576) {
+    glug.cs.t8815 = function(owner, data, beer_list_view, meta8816) {
       this.owner = owner;
       this.data = data;
       this.beer_list_view = beer_list_view;
-      this.meta8576 = meta8576;
+      this.meta8816 = meta8816;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t8575.prototype.om$core$IRender$ = true;
-    glug.cs.t8575.prototype.om$core$IRender$render$arity$1 = function(_) {
+    glug.cs.t8815.prototype.om$core$IRender$ = true;
+    glug.cs.t8815.prototype.om$core$IRender$render$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return React.DOM.div(null, React.DOM.h1(null, "Beer List"), cljs.core.apply.call(null, om.dom.ul, {"className":"beer-list"}, om.core.build_all.call(null, glug.cs.beer_view, glug.cs.sort_by_votes.call(null, (new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361)).cljs$core$IFn$_invoke$arity$1(self__.data)))));
     };
-    glug.cs.t8575.prototype.om$core$IWillMount$ = true;
-    glug.cs.t8575.prototype.om$core$IWillMount$will_mount$arity$1 = function(_) {
+    glug.cs.t8815.prototype.om$core$IWillMount$ = true;
+    glug.cs.t8815.prototype.om$core$IWillMount$will_mount$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return ajax.core.GET.call(null, "beers", new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "handler", "handler", -195596612), function(___$1) {
-        return function(p1__8571_SHARP_) {
-          return om.core.update_BANG_.call(null, self__.data, cljs.core.assoc.call(null, self__.data, new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361), cljs.core.mapv.call(null, function(___$1) {
-            return function(beer) {
-              return cljs.core.assoc.call(null, beer, new cljs.core.Keyword(null, "votes", "votes", -1161459422), 6, new cljs.core.Keyword(null, "upvoted", "upvoted", 582188092), false);
-            };
-          }(___$1), clojure.walk.keywordize_keys.call(null, p1__8571_SHARP_))));
+        return function(p1__8811_SHARP_) {
+          return om.core.update_BANG_.call(null, self__.data, cljs.core.assoc.call(null, self__.data, new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361), clojure.walk.keywordize_keys.call(null, p1__8811_SHARP_)));
         };
       }(___$1)], null));
     };
-    glug.cs.t8575.prototype.cljs$core$IMeta$_meta$arity$1 = function(_8577) {
+    glug.cs.t8815.prototype.cljs$core$IMeta$_meta$arity$1 = function(_8817) {
       var self__ = this;
-      var _8577__$1 = this;
-      return self__.meta8576;
+      var _8817__$1 = this;
+      return self__.meta8816;
     };
-    glug.cs.t8575.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_8577, meta8576__$1) {
+    glug.cs.t8815.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_8817, meta8816__$1) {
       var self__ = this;
-      var _8577__$1 = this;
-      return new glug.cs.t8575(self__.owner, self__.data, self__.beer_list_view, meta8576__$1);
+      var _8817__$1 = this;
+      return new glug.cs.t8815(self__.owner, self__.data, self__.beer_list_view, meta8816__$1);
     };
-    glug.cs.t8575.cljs$lang$type = true;
-    glug.cs.t8575.cljs$lang$ctorStr = "glug.cs/t8575";
-    glug.cs.t8575.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t8575");
+    glug.cs.t8815.cljs$lang$type = true;
+    glug.cs.t8815.cljs$lang$ctorStr = "glug.cs/t8815";
+    glug.cs.t8815.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t8815");
     };
-    glug.cs.__GT_t8575 = function glug$cs$beer_list_view_$___GT_t8575(owner__$1, data__$1, beer_list_view__$1, meta8576) {
-      return new glug.cs.t8575(owner__$1, data__$1, beer_list_view__$1, meta8576);
+    glug.cs.__GT_t8815 = function glug$cs$beer_list_view_$___GT_t8815(owner__$1, data__$1, beer_list_view__$1, meta8816) {
+      return new glug.cs.t8815(owner__$1, data__$1, beer_list_view__$1, meta8816);
     };
   }
-  return new glug.cs.t8575(owner, data, glug$cs$beer_list_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t8815(owner, data, glug$cs$beer_list_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 om.core.root.call(null, glug.cs.beer_list_view, glug.cs.app_state, new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "target", "target", 253001721), document.getElementById("app")], null));

@@ -42,6 +42,18 @@
 (defn crowd-beers [crowd-id]
   (sql/query spec [(str "select * from beers where crowd_id = ?") crowd-id]))
 
+(defn vote-find [crowd-id beer-id user-id]
+  (first (sql/query spec [(str "select * from votes where crowd_id = ? and beer_id = ? and user_id = ?") crowd-id beer-id user-id])))
+
+(defn crowd-votes [crowd-id]
+  (sql/query spec [(str "select * from votes where crowd_id = ?") crowd-id]))
+
+(defn vote-create [vote]
+  (first (sql/insert! spec :votes vote)))
+
+(defn vote-delete [vote-id]
+  (sql/delete! spec :votes ["id = ?" vote-id]))
+
 (def beer-cache (cache/ttl-cache-factory {} :ttl (* 1000 60 60 24 365)))
 
 (def parse-req (comp keywordize-keys json/read-str :body deref http/get))
@@ -53,10 +65,14 @@
      :brewery (get-in beer [:brewery :brewery_name])
      :image (:beer_label beer)}))
 
+(defn get-db-beer [column value]
+  (first (sql/query spec [(str "select * from beers where " column " = ?") value])))
+
 (defn beer-find [id]
-  (get
-    (if (cache/has? beer-cache id)
-      (cache/hit beer-cache id)
-      (cache/miss beer-cache id
-                  (get-untappd-beer id)))
-    id))
+  (let [beer-key (keyword (str id))]
+    (get
+      (if (cache/has? beer-cache beer-key)
+        (cache/hit beer-cache beer-key)
+        (cache/miss beer-cache beer-key
+                    (get-untappd-beer (:untappd_id (get-db-beer "id" id)))))
+      beer-key)))

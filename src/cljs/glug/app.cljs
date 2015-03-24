@@ -2,7 +2,7 @@
   (:require [om.core :as om]
             [om.dom :as dom]
             [clojure.walk :refer [keywordize-keys]]
-            [ajax.core :refer [GET POST]]))
+            [ajax.core :refer [GET POST PUT]]))
 
 (enable-console-print!)
 
@@ -20,7 +20,8 @@
            {:upvoted (not (:upvoted beer))
             :votes (if (:upvoted beer)
                      (dec (:votes beer))
-                     (inc (:votes beer)))})))
+                     (inc (:votes beer)))}))
+  (PUT (str "votes/" (:id beer)) {:error-handler #(om/update! beer beer)}))
 
 (defn beer-view
   [beer owner]
@@ -40,12 +41,7 @@
       (GET "beers"
            {:handler #(om/update!
                         data
-                        (assoc data :beer-list (mapv
-                                                 (fn [beer] (assoc
-                                                              beer
-                                                              :votes 6
-                                                              :upvoted false))
-                                                 (keywordize-keys %))))}))
+                        (assoc data :beer-list (keywordize-keys %)))}))
     om/IRender
     (render [_]
       (dom/div nil
