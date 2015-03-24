@@ -18,6 +18,7 @@ CREATE TABLE votes (
 CREATE TABLE beers (
   id            serial primary key,
   untappd_id    integer,
+  crowd_id      integer,
   is_available  boolean default true,
   added_by      integer NOT NULL
 );

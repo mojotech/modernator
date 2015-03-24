@@ -30,13 +30,13 @@
     (ring/redirect "/signup-confirm")))
 
 (defn crowd-activate [auth-token]
-  (let [user (models/user-get "auth_token" auth-token)]
+  (let [user (models/user-find "auth_token" auth-token)]
     (if (nil? user)
       (ring/response "What the hell?")
       (do
         (models/user-update {:is_verified true} ["id = ?" (:id user)])
 
-        (pmap #(when (not= (:was_invited (models/user-get "id" (:id %))) true)
+        (pmap #(when (not= (:was_invited (models/user-find "id" (:id %))) true)
                  (postal/send-message
                    {:from "jake+adam@mojotech.com"
                     :to (:email %)
@@ -46,7 +46,7 @@
                  (models/user-update {:was_invited true} ["id = ?" (:id %)]))
               (remove
                 #(= (:id user) (:id %))
-                (models/users-get "crowd_id" (:crowd_id user))))
+                (models/users-find "crowd_id" (:crowd_id user))))
 
         {:status 302
          :headers {"Location" "/"}
@@ -54,7 +54,7 @@
                    "auth-token" {:value (:auth_token user) :path "/"}}}))))
 
 (defn user-activate [auth-token]
-  (let [user (models/user-get "auth_token" auth-token)]
+  (let [user (models/user-find "auth_token" auth-token)]
     (if (nil? user)
       (ring/response "What the hell?")
       (do
@@ -64,6 +64,13 @@
          :headers {"Location" "/"}
          :cookies {"user-id" {:value (:id user) :path "/"}
                    "auth-token" {:value (:auth_token user) :path "/"}}}))))
+
+(defn beers-index [req]
+  (ring/response
+    (map
+      #(models/beer-find (:untappd_id %))
+      (models/crowd-beers
+        (:crowd_id (models/user-find "id" (Integer. (:value (get (:cookies req) "user-id")))))))))
 
 (def public-uri-bases #{"/signup" "/confirm-"})
 
@@ -76,12 +83,14 @@
               (and
                 (not (nil? cookie-auth-token))
                 (not (nil? cookie-user-id))
-                (= cookie-auth-token (:auth_token (models/user-get "id" (Integer. cookie-user-id))))))
+                (= cookie-auth-token (:auth_token (models/user-find "id" (Integer. cookie-user-id))))))
         (handler request)
         (ring/redirect "/signup")))))
 
 (defroutes main
   (GET "/" [] (views/index))
+  (GET "/beers" req (beers-index req))
+
   (GET "/signup" [] (views/signup))
   (POST "/signup" req (crowd-create req))
   (GET "/signup-confirm" [] (views/signup-confirm))

@@ -1,1 +1,1 @@
-DROP TABLE users, votes, crowds;
+DROP TABLE users, votes, beers, crowds;

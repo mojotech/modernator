@@ -3,6 +3,7 @@
            [compojure.route :as route]
            [ring.adapter.jetty :as ring]
            [ring.middleware.params :as params]
+           [ring.middleware.json :as json]
            [ring.middleware.cookies :as cookies]
            [glug.controllers.main :as controllers])
   (:gen-class))
@@ -11,6 +12,7 @@
   (-> controllers/main
       controllers/auth
       cookies/wrap-cookies
+      json/wrap-json-response
       params/wrap-params)
   (route/resources "/public"))
 
