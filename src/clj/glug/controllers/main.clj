@@ -80,6 +80,23 @@
                   :votes (count beer-votes) :upvoted user-upvoted?))
         beers))))
 
+(defn beers-search [req]
+  (let [query (get-in req [:params :query])]
+    (ring/response (models/beers-search query))))
+
+(defn beers-add [req]
+  (let [untappd-id (Integer. (get-in req [:params :id]))
+        user-id (Integer. (:value (get (:cookies req) "user-id")))
+        crowd-id (:crowd_id (models/user-find "id" user-id))]
+    (models/vote-create
+      {:crowd_id crowd-id
+       :user_id user-id
+       :beer_id (:id (models/beer-create!
+                       {:crowd_id crowd-id
+                        :untappd_id untappd-id
+                        :is_available true
+                        :added_by user-id}))})))
+
 (defn vote-toggle [req]
   (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
         beer-id (Integer. (get-in req [:params :beer_id]))
@@ -115,4 +132,6 @@
 
   (GET "/" [] (views/index))
   (GET "/beers" req (beers-index req))
+  (PUT "/beers/:id" req (beers-add req))
+  (GET "/beers/search/:query" req (beers-search req))
   (PUT "/votes/:beer_id" req (vote-toggle req)))
