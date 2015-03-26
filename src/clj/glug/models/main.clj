@@ -26,7 +26,7 @@
 
 (def untappd-uri "https://api.untappd.com/v4/")
 
-(def beer-cache (cache/ttl-cache-factory {} :ttl (* 1000 60 60 24 365)))
+(def beer-cache (atom {}))
 
 (def parse-req (comp keywordize-keys json/read-str :body deref http/get))
 
@@ -90,14 +90,12 @@
       [:response :beers :items]))
   ; [{:name "Heinekin" :brewery "Crappy" :untappd-id 370448 :image "http://crap.jpg.to"}
   ;  {:name "Yuengling" :brewery "Some Other One" :untappd-id 511925 :image "http://yuengling.jpg.to"}]
-
   )
 
 (defn beer-find [id]
   (let [beer-key (keyword (str id))]
-    (get
-      (if (cache/has? beer-cache beer-key)
-        (cache/hit beer-cache beer-key)
-        (cache/miss beer-cache beer-key
-                    (get-untappd-beer (:untappd_id (get-db-beer "id" id)))))
-      beer-key)))
+    (if-let [cached-beer (beer-key @beer-cache)]
+      cached-beer
+      (let [fetched-beer (get-untappd-beer (:untappd_id (get-db-beer "id" id)))]
+        (swap! beer-cache merge {beer-key fetched-beer})
+        fetched-beer))))
