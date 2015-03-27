@@ -81,7 +81,8 @@
         beers))))
 
 (defn beers-search [req]
-  (let [query (get-in req [:params :query])]
+  (let [query (get-in req [:params :query])
+        _ (println req)]
     (ring/response (models/beers-search query))))
 
 (defn beers-add [req]

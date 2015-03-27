@@ -2,6 +2,7 @@
   (:require [clojure.java.jdbc :as sql]
             [clojure.walk :refer [keywordize-keys]]
             [clojure.core.cache :as cache]
+            [cemerick.url :refer [url-encode]]
             [crypto.random :as random]
             [clojure.data.json :as json]
             [org.httpkit.client :as http]))
@@ -67,7 +68,6 @@
   ; {:name "Foo"
   ;  :brewery "Bar"
   ;  :image "http://beer.jpg.to"}
-
   )
 
 (defn get-db-beer [column value]
@@ -86,7 +86,7 @@
        :brewery (get-in % [:brewery :brewery_name]))
     (get-in
       (parse-req
-        (untappd-endpoint "search/beer" (str "q=" query)))
+        (untappd-endpoint "search/beer" (str "q=" (url-encode query))))
       [:response :beers :items]))
   ; [{:name "Heinekin" :brewery "Crappy" :untappd-id 370448 :image "http://crap.jpg.to"}
   ;  {:name "Yuengling" :brewery "Some Other One" :untappd-id 511925 :image "http://yuengling.jpg.to"}]

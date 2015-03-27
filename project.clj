@@ -19,6 +19,7 @@
                  [ring/ring-defaults "0.1.4"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [ring-transit "0.1.3"]
+                 [com.cemerick/url "0.1.1"]
                  [compojure "1.1.6"]
                  [com.draines/postal "1.11.3"]
                  [hiccup "1.0.4"]
