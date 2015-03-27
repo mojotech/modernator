@@ -26,15 +26,22 @@
   (PUT (str "votes/" (:id beer)) {:error-handler #(om/update! beer beer)}))
 
 (defn debounce
-  ([f] (debounce f 1000))
-  ([f timeout]
-    (let [id (atom nil)]
-      (fn [evt]
-        (if (not (nil? @id))
-          (js/clearTimeout @id))
-        (reset! id (js/setTimeout
-                   (partial f evt)
-                   timeout))))))
+  ([func wait]
+   (debounce func wait nil))
+  ([func wait immediate]
+   (let [timeout (atom nil)]
+     (fn []
+       (this-as this
+                (let [context this
+                      args js/arguments
+                      later (fn []
+                              (reset! timeout nil)
+                              (when-not immediate
+                                (.apply func context args)))]
+                  (if (and immediate (not @timeout))
+                    (.apply func context args))
+                  (js/clearTimeout @timeout)
+                  (reset! timeout (js/setTimeout later wait))))))))
 
 (defn beer-view
   [beer owner]
@@ -61,10 +68,13 @@
                     data
                     (assoc-in data [:typeahead :list] (keywordize-keys %)))}))
 
+(def debounced-update-typeahead!
+  (debounce update-typeahead! 1000))
+
 (defn handle-change [e owner state data]
   (let [value (.. e -target -value)]
     (om/set-state! owner :search value)
-    (update-typeahead! value data)))
+    (debounced-update-typeahead! value data)))
 
 (defn new-selected
   [direction data]
