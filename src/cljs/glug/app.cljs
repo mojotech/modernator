@@ -69,7 +69,7 @@
                     (assoc-in data [:typeahead :list] (keywordize-keys %)))}))
 
 (def debounced-update-typeahead!
-  (debounce update-typeahead! 1000))
+  (debounce update-typeahead! 500))
 
 (defn handle-change [e owner state data]
   (let [value (.. e -target -value)]
@@ -80,7 +80,8 @@
   [direction data]
   (if (= direction "up")
     (max 0 (dec (get-in data [:typeahead :selected])))
-    (min (dec (count (get-in data [:typeahead :list]))) (inc (get-in data [:typeahead :selected])))))
+    (min (dec (count (get-in data [:typeahead :list])))
+         (inc (get-in data [:typeahead :selected])))))
 
 (defn sync-list! [data]
   (GET "beers"
@@ -90,7 +91,8 @@
 
 (defn add-selected-to-list!
   [data]
-  (PUT (str "beers/" (:untappd-id (nth (get-in data [:typeahead :list]) (get-in data [:typeahead :selected]))))
+  (PUT (str "beers/" (:api-id (nth (get-in data [:typeahead :list])
+                                   (get-in data [:typeahead :selected]))))
        {:handler #(sync-list! data)}))
 
 (defn beer-list-view

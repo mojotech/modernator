@@ -25,20 +25,18 @@
 (defn users-find [column value]
   (sql/query spec [(str "select * from users where " column " = ?") value]))
 
-(def untappd-uri "https://api.untappd.com/v4/")
+(def api-uri "http://api.brewerydb.com/v2/")
 
 (def beer-cache (atom {}))
 
 (def parse-req (comp keywordize-keys json/read-str :body deref http/get))
 
-(defn untappd-endpoint [method params]
+(defn api-endpoint [method params]
   (str
-    untappd-uri
+    api-uri
     method
-    "?client_id="
-    (System/getenv "UNTAPPD_CLIENT_ID")
-    "&client_secret="
-    (System/getenv "UNTAPPD_CLIENT_SECRET")
+    "?key="
+    (System/getenv "BREWERY_DB_API_KEY")
     (when (not (empty? params))
       (str
         "&"
@@ -59,16 +57,11 @@
 (defn vote-delete [vote-id]
   (sql/delete! spec :votes ["id = ?" vote-id]))
 
-(defn get-untappd-beer [id]
-  (let [beer (get-in (parse-req (untappd-endpoint (str "beer/info/" id) nil))
-                     [:response :beer])]
-    {:name (:beer_name beer)
-     :brewery (get-in beer [:brewery :brewery_name])
-     :image (:beer_label beer)})
-  ; {:name "Foo"
-  ;  :brewery "Bar"
-  ;  :image "http://beer.jpg.to"}
-  )
+(defn get-api-beer [id]
+  (let [beer (:data (parse-req (api-endpoint (str "beer/" id) "withBreweries=Y")))]
+    {:name (:name beer)
+     :brewery (-> beer :breweries first :name)
+     :image (-> beer :labels :icon)}))
 
 (defn get-db-beer [column value]
   (first (sql/query spec [(str "select * from beers where " column " = ?") value])))
@@ -76,26 +69,21 @@
 (defn beer-create! [beer]
   (first (sql/insert! spec :beers beer)))
 
-;(def query "plin")
 (defn beers-search [query]
   (map
     #(hash-map
-       :name (get-in % [:beer :beer_name])
-       :image (get-in % [:beer :beer_label])
-       :untappd-id (get-in % [:beer :bid])
-       :brewery (get-in % [:brewery :brewery_name]))
-    (get-in
-      (parse-req
-        (untappd-endpoint "search/beer" (str "q=" (url-encode query))))
-      [:response :beers :items]))
-  ; [{:name "Heinekin" :brewery "Crappy" :untappd-id 370448 :image "http://crap.jpg.to"}
-  ;  {:name "Yuengling" :brewery "Some Other One" :untappd-id 511925 :image "http://yuengling.jpg.to"}]
-  )
+       :name (:name %)
+       :image (-> % :labels :icon)
+       :brewery (-> % :breweries first :name)
+       :api-id (:id %))
+    (:data (parse-req (api-endpoint
+                        "search"
+                        (str "type=beer&withBreweries=Y&q=" (url-encode query)))))))
 
 (defn beer-find [id]
   (let [beer-key (keyword (str id))]
     (if-let [cached-beer (beer-key @beer-cache)]
       cached-beer
-      (let [fetched-beer (get-untappd-beer (:untappd_id (get-db-beer "id" id)))]
+      (let [fetched-beer (get-api-beer (:api_id (get-db-beer "id" id)))]
         (swap! beer-cache merge {beer-key fetched-beer})
         fetched-beer))))

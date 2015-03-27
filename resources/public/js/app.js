@@ -72523,91 +72523,91 @@ glug.cs.debounce = function() {
   return glug$cs$debounce;
 }();
 glug.cs.beer_view = function glug$cs$beer_view(beer, owner) {
-  if (typeof glug.cs.t12412 !== "undefined") {
+  if (typeof glug.cs.t12592 !== "undefined") {
   } else {
-    glug.cs.t12412 = function(owner, beer, beer_view, meta12413) {
+    glug.cs.t12592 = function(owner, beer, beer_view, meta12593) {
       this.owner = owner;
       this.beer = beer;
       this.beer_view = beer_view;
-      this.meta12413 = meta12413;
+      this.meta12593 = meta12593;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t12412.prototype.om$core$IRender$ = true;
-    glug.cs.t12412.prototype.om$core$IRender$render$arity$1 = function(_) {
+    glug.cs.t12592.prototype.om$core$IRender$ = true;
+    glug.cs.t12592.prototype.om$core$IRender$render$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return React.DOM.li(null, (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(self__.beer), " (", (new cljs.core.Keyword(null, "votes", "votes", -1161459422)).cljs$core$IFn$_invoke$arity$1(self__.beer), ")", React.DOM.button({"onClick":function(___$1) {
-        return function(p1__12408_SHARP_) {
-          return glug.cs.upvote_beer_BANG_.call(null, p1__12408_SHARP_, self__.beer);
+        return function(p1__12588_SHARP_) {
+          return glug.cs.upvote_beer_BANG_.call(null, p1__12588_SHARP_, self__.beer);
         };
       }(___$1)}, "Vote"));
     };
-    glug.cs.t12412.prototype.cljs$core$IMeta$_meta$arity$1 = function(_12414) {
+    glug.cs.t12592.prototype.cljs$core$IMeta$_meta$arity$1 = function(_12594) {
       var self__ = this;
-      var _12414__$1 = this;
-      return self__.meta12413;
+      var _12594__$1 = this;
+      return self__.meta12593;
     };
-    glug.cs.t12412.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_12414, meta12413__$1) {
+    glug.cs.t12592.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_12594, meta12593__$1) {
       var self__ = this;
-      var _12414__$1 = this;
-      return new glug.cs.t12412(self__.owner, self__.beer, self__.beer_view, meta12413__$1);
+      var _12594__$1 = this;
+      return new glug.cs.t12592(self__.owner, self__.beer, self__.beer_view, meta12593__$1);
     };
-    glug.cs.t12412.cljs$lang$type = true;
-    glug.cs.t12412.cljs$lang$ctorStr = "glug.cs/t12412";
-    glug.cs.t12412.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t12412");
+    glug.cs.t12592.cljs$lang$type = true;
+    glug.cs.t12592.cljs$lang$ctorStr = "glug.cs/t12592";
+    glug.cs.t12592.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t12592");
     };
-    glug.cs.__GT_t12412 = function glug$cs$beer_view_$___GT_t12412(owner__$1, beer__$1, beer_view__$1, meta12413) {
-      return new glug.cs.t12412(owner__$1, beer__$1, beer_view__$1, meta12413);
+    glug.cs.__GT_t12592 = function glug$cs$beer_view_$___GT_t12592(owner__$1, beer__$1, beer_view__$1, meta12593) {
+      return new glug.cs.t12592(owner__$1, beer__$1, beer_view__$1, meta12593);
     };
   }
-  return new glug.cs.t12412(owner, beer, glug$cs$beer_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t12592(owner, beer, glug$cs$beer_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 glug.cs.typeahead_view = function glug$cs$typeahead_view(item, owner) {
-  if (typeof glug.cs.t12418 !== "undefined") {
+  if (typeof glug.cs.t12598 !== "undefined") {
   } else {
-    glug.cs.t12418 = function(owner, item, typeahead_view, meta12419) {
+    glug.cs.t12598 = function(owner, item, typeahead_view, meta12599) {
       this.owner = owner;
       this.item = item;
       this.typeahead_view = typeahead_view;
-      this.meta12419 = meta12419;
+      this.meta12599 = meta12599;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t12418.prototype.om$core$IRender$ = true;
-    glug.cs.t12418.prototype.om$core$IRender$render$arity$1 = function(_) {
+    glug.cs.t12598.prototype.om$core$IRender$ = true;
+    glug.cs.t12598.prototype.om$core$IRender$render$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return React.DOM.li({"style":{"fontWeight":cljs.core.truth_((new cljs.core.Keyword(null, "selected", "selected", 574897764)).cljs$core$IFn$_invoke$arity$1(self__.item)) ? "bold" : "normal"}}, (new cljs.core.Keyword(null, "name", "name", 1843675177)).cljs$core$IFn$_invoke$arity$1(self__.item));
     };
-    glug.cs.t12418.prototype.cljs$core$IMeta$_meta$arity$1 = function(_12420) {
+    glug.cs.t12598.prototype.cljs$core$IMeta$_meta$arity$1 = function(_12600) {
       var self__ = this;
-      var _12420__$1 = this;
-      return self__.meta12419;
+      var _12600__$1 = this;
+      return self__.meta12599;
     };
-    glug.cs.t12418.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_12420, meta12419__$1) {
+    glug.cs.t12598.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_12600, meta12599__$1) {
       var self__ = this;
-      var _12420__$1 = this;
-      return new glug.cs.t12418(self__.owner, self__.item, self__.typeahead_view, meta12419__$1);
+      var _12600__$1 = this;
+      return new glug.cs.t12598(self__.owner, self__.item, self__.typeahead_view, meta12599__$1);
     };
-    glug.cs.t12418.cljs$lang$type = true;
-    glug.cs.t12418.cljs$lang$ctorStr = "glug.cs/t12418";
-    glug.cs.t12418.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t12418");
+    glug.cs.t12598.cljs$lang$type = true;
+    glug.cs.t12598.cljs$lang$ctorStr = "glug.cs/t12598";
+    glug.cs.t12598.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t12598");
     };
-    glug.cs.__GT_t12418 = function glug$cs$typeahead_view_$___GT_t12418(owner__$1, item__$1, typeahead_view__$1, meta12419) {
-      return new glug.cs.t12418(owner__$1, item__$1, typeahead_view__$1, meta12419);
+    glug.cs.__GT_t12598 = function glug$cs$typeahead_view_$___GT_t12598(owner__$1, item__$1, typeahead_view__$1, meta12599) {
+      return new glug.cs.t12598(owner__$1, item__$1, typeahead_view__$1, meta12599);
     };
   }
-  return new glug.cs.t12418(owner, item, glug$cs$typeahead_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t12598(owner, item, glug$cs$typeahead_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 glug.cs.update_typeahead_BANG_ = function glug$cs$update_typeahead_BANG_(query, data) {
-  return ajax.core.GET.call(null, [cljs.core.str("beers/search/"), cljs.core.str(query)].join(""), new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "handler", "handler", -195596612), function(p1__12421_SHARP_) {
-    return om.core.update_BANG_.call(null, data, cljs.core.assoc_in.call(null, data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "list", "list", 765357683)], null), clojure.walk.keywordize_keys.call(null, p1__12421_SHARP_)));
+  return ajax.core.GET.call(null, [cljs.core.str("beers/search/"), cljs.core.str(query)].join(""), new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "handler", "handler", -195596612), function(p1__12601_SHARP_) {
+    return om.core.update_BANG_.call(null, data, cljs.core.assoc_in.call(null, data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "list", "list", 765357683)], null), clojure.walk.keywordize_keys.call(null, p1__12601_SHARP_)));
   }], null));
 };
-glug.cs.debounced_update_typeahead_BANG_ = glug.cs.debounce.call(null, glug.cs.update_typeahead_BANG_, 1E3);
+glug.cs.debounced_update_typeahead_BANG_ = glug.cs.debounce.call(null, glug.cs.update_typeahead_BANG_, 500);
 glug.cs.handle_change = function glug$cs$handle_change(e, owner, state, data) {
   var value = e.target.value;
   om.core.set_state_BANG_.call(null, owner, new cljs.core.Keyword(null, "search", "search", 1564939822), value);
@@ -72625,35 +72625,35 @@ glug.cs.new_selected = function glug$cs$new_selected(direction, data) {
   }
 };
 glug.cs.sync_list_BANG_ = function glug$cs$sync_list_BANG_(data) {
-  return ajax.core.GET.call(null, "beers", new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "handler", "handler", -195596612), function(p1__12422_SHARP_) {
-    return om.core.update_BANG_.call(null, data, cljs.core.assoc.call(null, data, new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361), clojure.walk.keywordize_keys.call(null, p1__12422_SHARP_)));
+  return ajax.core.GET.call(null, "beers", new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "handler", "handler", -195596612), function(p1__12602_SHARP_) {
+    return om.core.update_BANG_.call(null, data, cljs.core.assoc.call(null, data, new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361), clojure.walk.keywordize_keys.call(null, p1__12602_SHARP_)));
   }], null));
 };
 glug.cs.add_selected_to_list_BANG_ = function glug$cs$add_selected_to_list_BANG_(data) {
-  return ajax.core.PUT.call(null, [cljs.core.str("beers/"), cljs.core.str((new cljs.core.Keyword(null, "untappd-id", "untappd-id", 2100087211)).cljs$core$IFn$_invoke$arity$1(cljs.core.nth.call(null, cljs.core.get_in.call(null, data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "list", "list", 765357683)], null)), cljs.core.get_in.call(null, data, new cljs.core.PersistentVector(null, 
+  return ajax.core.PUT.call(null, [cljs.core.str("beers/"), cljs.core.str((new cljs.core.Keyword(null, "api-id", "api-id", 1576434934)).cljs$core$IFn$_invoke$arity$1(cljs.core.nth.call(null, cljs.core.get_in.call(null, data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "list", "list", 765357683)], null)), cljs.core.get_in.call(null, data, new cljs.core.PersistentVector(null, 
   2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "selected", "selected", 574897764)], null)))))].join(""), new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "handler", "handler", -195596612), function() {
     return glug.cs.sync_list_BANG_.call(null, data);
   }], null));
 };
 glug.cs.beer_list_view = function glug$cs$beer_list_view(data, owner) {
-  if (typeof glug.cs.t12431 !== "undefined") {
+  if (typeof glug.cs.t12611 !== "undefined") {
   } else {
-    glug.cs.t12431 = function(owner, data, beer_list_view, meta12432) {
+    glug.cs.t12611 = function(owner, data, beer_list_view, meta12612) {
       this.owner = owner;
       this.data = data;
       this.beer_list_view = beer_list_view;
-      this.meta12432 = meta12432;
+      this.meta12612 = meta12612;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216;
     };
-    glug.cs.t12431.prototype.om$core$IRenderState$ = true;
-    glug.cs.t12431.prototype.om$core$IRenderState$render_state$arity$2 = function(this$, state) {
+    glug.cs.t12611.prototype.om$core$IRenderState$ = true;
+    glug.cs.t12611.prototype.om$core$IRenderState$render_state$arity$2 = function(this$, state) {
       var self__ = this;
       var this$__$1 = this;
       return React.DOM.div(null, React.DOM.h1(null, "Beer List"), om.dom.input.call(null, {"value":(new cljs.core.Keyword(null, "search", "search", 1564939822)).cljs$core$IFn$_invoke$arity$1(state), "onKeyDown":function(this$__$1) {
-        return function(p1__12424_SHARP_) {
-          var G__12434 = p1__12424_SHARP_.key;
-          switch(G__12434) {
+        return function(p1__12604_SHARP_) {
+          var G__12614 = p1__12604_SHARP_.key;
+          switch(G__12614) {
             case "ArrowUp":
               return om.core.update_BANG_.call(null, self__.data, cljs.core.assoc_in.call(null, self__.data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "selected", "selected", 574897764)], null), glug.cs.new_selected.call(null, "up", self__.data)));
               break;
@@ -72668,49 +72668,49 @@ glug.cs.beer_list_view = function glug$cs$beer_list_view(data, owner) {
           }
         };
       }(this$__$1), "onChange":function(this$__$1) {
-        return function(p1__12423_SHARP_) {
-          return glug.cs.handle_change.call(null, p1__12423_SHARP_, self__.owner, state, self__.data);
+        return function(p1__12603_SHARP_) {
+          return glug.cs.handle_change.call(null, p1__12603_SHARP_, self__.owner, state, self__.data);
         };
       }(this$__$1), "ref":"new-beer", "type":"text"}), cljs.core.apply.call(null, om.dom.ul, {"className":"typeahead-list"}, om.core.build_all.call(null, glug.cs.typeahead_view, cljs.core.map_indexed.call(null, function(this$__$1) {
-        return function(p1__12426_SHARP_, p2__12425_SHARP_) {
+        return function(p1__12606_SHARP_, p2__12605_SHARP_) {
           var selected_index = cljs.core.get_in.call(null, self__.data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "selected", "selected", 574897764)], null));
-          var item = p2__12425_SHARP_;
-          var index = p1__12426_SHARP_;
+          var item = p2__12605_SHARP_;
+          var index = p1__12606_SHARP_;
           return cljs.core.assoc.call(null, item, new cljs.core.Keyword(null, "selected", "selected", 574897764), cljs.core._EQ_.call(null, index, selected_index));
         };
       }(this$__$1), cljs.core.get_in.call(null, self__.data, new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null, "typeahead", "typeahead", -1364611797), new cljs.core.Keyword(null, "list", "list", 765357683)], null))))), cljs.core.apply.call(null, om.dom.ul, {"className":"beer-list"}, om.core.build_all.call(null, glug.cs.beer_view, glug.cs.sort_by_votes.call(null, (new cljs.core.Keyword(null, "beer-list", "beer-list", 1867684361)).cljs$core$IFn$_invoke$arity$1(self__.data)))));
     };
-    glug.cs.t12431.prototype.om$core$IWillMount$ = true;
-    glug.cs.t12431.prototype.om$core$IWillMount$will_mount$arity$1 = function(_) {
+    glug.cs.t12611.prototype.om$core$IWillMount$ = true;
+    glug.cs.t12611.prototype.om$core$IWillMount$will_mount$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return glug.cs.sync_list_BANG_.call(null, self__.data);
     };
-    glug.cs.t12431.prototype.om$core$IInitState$ = true;
-    glug.cs.t12431.prototype.om$core$IInitState$init_state$arity$1 = function(_) {
+    glug.cs.t12611.prototype.om$core$IInitState$ = true;
+    glug.cs.t12611.prototype.om$core$IInitState$init_state$arity$1 = function(_) {
       var self__ = this;
       var ___$1 = this;
       return new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "search", "search", 1564939822), ""], null);
     };
-    glug.cs.t12431.prototype.cljs$core$IMeta$_meta$arity$1 = function(_12433) {
+    glug.cs.t12611.prototype.cljs$core$IMeta$_meta$arity$1 = function(_12613) {
       var self__ = this;
-      var _12433__$1 = this;
-      return self__.meta12432;
+      var _12613__$1 = this;
+      return self__.meta12612;
     };
-    glug.cs.t12431.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_12433, meta12432__$1) {
+    glug.cs.t12611.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(_12613, meta12612__$1) {
       var self__ = this;
-      var _12433__$1 = this;
-      return new glug.cs.t12431(self__.owner, self__.data, self__.beer_list_view, meta12432__$1);
+      var _12613__$1 = this;
+      return new glug.cs.t12611(self__.owner, self__.data, self__.beer_list_view, meta12612__$1);
     };
-    glug.cs.t12431.cljs$lang$type = true;
-    glug.cs.t12431.cljs$lang$ctorStr = "glug.cs/t12431";
-    glug.cs.t12431.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
-      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t12431");
+    glug.cs.t12611.cljs$lang$type = true;
+    glug.cs.t12611.cljs$lang$ctorStr = "glug.cs/t12611";
+    glug.cs.t12611.cljs$lang$ctorPrWriter = function(this__4701__auto__, writer__4702__auto__, opt__4703__auto__) {
+      return cljs.core._write.call(null, writer__4702__auto__, "glug.cs/t12611");
     };
-    glug.cs.__GT_t12431 = function glug$cs$beer_list_view_$___GT_t12431(owner__$1, data__$1, beer_list_view__$1, meta12432) {
-      return new glug.cs.t12431(owner__$1, data__$1, beer_list_view__$1, meta12432);
+    glug.cs.__GT_t12611 = function glug$cs$beer_list_view_$___GT_t12611(owner__$1, data__$1, beer_list_view__$1, meta12612) {
+      return new glug.cs.t12611(owner__$1, data__$1, beer_list_view__$1, meta12612);
     };
   }
-  return new glug.cs.t12431(owner, data, glug$cs$beer_list_view, cljs.core.PersistentArrayMap.EMPTY);
+  return new glug.cs.t12611(owner, data, glug$cs$beer_list_view, cljs.core.PersistentArrayMap.EMPTY);
 };
 om.core.root.call(null, glug.cs.beer_list_view, glug.cs.app_state, new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null, "target", "target", 253001721), document.getElementById("app")], null));

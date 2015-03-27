@@ -74,8 +74,7 @@
       (map
         #(let [beer-votes (filter (fn [vote] (= (:beer_id vote) (:id %))) votes)
                user-upvoted? (some (fn [vote] (= (:user_id vote) user-id)) beer-votes)
-               beer-info (models/beer-find (:id %))
-               ]
+               beer-info (models/beer-find (:id %))]
            (assoc (merge % beer-info)
                   :votes (count beer-votes) :upvoted user-upvoted?))
         beers))))
@@ -86,7 +85,7 @@
     (ring/response (models/beers-search query))))
 
 (defn beers-add [req]
-  (let [untappd-id (Integer. (get-in req [:params :id]))
+  (let [api-id (get-in req [:params :id])
         user-id (Integer. (:value (get (:cookies req) "user-id")))
         crowd-id (:crowd_id (models/user-find "id" user-id))]
     (models/vote-create
@@ -94,7 +93,7 @@
        :user_id user-id
        :beer_id (:id (models/beer-create!
                        {:crowd_id crowd-id
-                        :untappd_id untappd-id
+                        :api_id api-id
                         :is_available true
                         :added_by user-id}))})))
 
