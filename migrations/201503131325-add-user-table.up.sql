@@ -12,15 +12,14 @@ CREATE TABLE votes (
   id          serial primary key,
   crowd_id    integer NOT NULL,
   user_id     integer NOT NULL,
-  beer_id     integer NOT NULL,
+  item_id     integer NOT NULL,
   created_at  timestamp default current_timestamp
 );
 
-CREATE TABLE beers (
+CREATE TABLE items (
   id            serial primary key,
-  api_id        text,
+  title         text,
   crowd_id      integer,
-  is_available  boolean default true,
   added_by      integer NOT NULL
 );
 

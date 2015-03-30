@@ -1,7 +1,7 @@
 (ns glug.controllers.main
   (:require [compojure.core :refer [defroutes GET POST PUT]]
             [clojure.walk :refer [keywordize-keys]]
-            [ring.util.response :as ring]
+            [ring.util.response :as response]
             [postal.core :as postal]
             [glug.views.main :as views]
             [glug.models.main :as models]))
@@ -27,12 +27,12 @@
        :body [{:type "text/html"
                :content (views/admin-welcome-email (:auth_token owner))}]})
 
-    (ring/redirect "/signup-confirm")))
+    (response/redirect "/signup-confirm")))
 
 (defn crowd-activate [auth-token]
   (let [user (models/user-find "auth_token" auth-token)]
     (if (nil? user)
-      (ring/response "What the hell?")
+      (response/response "What the hell?")
       (do
         (models/user-update {:is_verified true} ["id = ?" (:id user)])
 
@@ -56,7 +56,7 @@
 (defn user-activate [auth-token]
   (let [user (models/user-find "auth_token" auth-token)]
     (if (nil? user)
-      (ring/response "What the hell?")
+      {:status 404}
       (do
         (models/user-update {:is_verified true} ["id = ?" (:id user)])
 
@@ -65,63 +65,49 @@
          :cookies {"user-id" {:value (:id user) :path "/"}
                    "auth-token" {:value (:auth_token user) :path "/"}}}))))
 
-(defn beers-index [req]
+(defn items-index [req]
   (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
         crowd-id (:crowd_id (models/user-find "id" user-id))
-        beers (models/crowd-beers crowd-id)
+        items (models/crowd-items crowd-id)
         votes (models/crowd-votes crowd-id)]
-    (ring/response
+    (response/response
       (map
-        #(let [beer-votes (filter (fn [vote] (= (:beer_id vote) (:id %))) votes)
-               user-upvoted? (some (fn [vote] (= (:user_id vote) user-id)) beer-votes)
-               beer-info (models/beer-find (:id %))]
-           (assoc (merge % beer-info)
-                  :votes (count beer-votes) :upvoted user-upvoted?))
-        beers))))
+        #(let [item-votes (filter (fn [vote] (= (:item_id vote) (:id %))) votes)
+               user-upvoted? (some
+                               (fn [vote] (= (:user_id vote) user-id))
+                               item-votes)]
+           (assoc % :votes (count item-votes) :upvoted user-upvoted?))
+        items))))
 
-(defn beers-search [req]
-  (let [query (get-in req [:params :query])
-        _ (println req)]
-    (ring/response (models/beers-search query))))
-
-(defn beers-add [req]
-  (let [api-id (get-in req [:params :id])
-        user-id (Integer. (:value (get (:cookies req) "user-id")))
-        crowd-id (:crowd_id (models/user-find "id" user-id))]
-    (models/vote-create
-      {:crowd_id crowd-id
-       :user_id user-id
-       :beer_id (:id (models/beer-create!
-                       {:crowd_id crowd-id
-                        :api_id api-id
-                        :is_available true
-                        :added_by user-id}))})))
+(defn items-add [req]
+  (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
+        crowd-id (:crowd_id (models/user-find "id" user-id))
+        title (-> req :body :title)
+        item (let [existing-item (models/item-find "title" title)]
+               (if-not (nil? existing-item)
+                 existing-item
+                 (models/item-create!
+                   {:crowd_id crowd-id
+                    :title title
+                    :added_by user-id})))
+        existing-vote (models/vote-find crowd-id (:id item) user-id)]
+    (if (nil? existing-vote)
+      (models/vote-create
+        {:crowd_id crowd-id
+         :user_id user-id
+         :item_id (:id item)}))
+    {:status 200}))
 
 (defn vote-toggle [req]
   (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
-        beer-id (Integer. (get-in req [:params :beer_id]))
+        item-id (Integer. (get-in req [:params :item_id]))
         crowd-id (:crowd_id (models/user-find "id" user-id))
         user (models/user-find "id" user-id)
-        vote (models/vote-find crowd-id beer-id user-id)]
+        vote (models/vote-find crowd-id item-id user-id)]
     (if (nil? vote)
-      (models/vote-create {:crowd_id crowd-id :beer_id beer-id :user_id user-id})
+      (models/vote-create {:crowd_id crowd-id :item_id item-id :user_id user-id})
       (models/vote-delete (:id vote)))
     {:status 200}))
-
-(def public-uri-bases #{"/signup" "/confirm-"})
-
-(defn auth [handler]
-  (fn [request]
-    (let [cookies (:cookies request)
-          cookie-auth-token (:value (get cookies "auth-token"))
-          cookie-user-id (:value (get cookies "user-id"))]
-      (if (or (some #(.contains (:uri request) %) public-uri-bases)
-              (and
-                (not (nil? cookie-auth-token))
-                (not (nil? cookie-user-id))
-                (= cookie-auth-token (:auth_token (models/user-find "id" (Integer. cookie-user-id))))))
-        (handler request)
-        (ring/redirect "/signup")))))
 
 (defroutes main
   (GET "/signup" [] (views/signup))
@@ -131,7 +117,6 @@
   (GET "/confirm-user/:auth-token" [auth-token] (user-activate auth-token))
 
   (GET "/" [] (views/index))
-  (GET "/beers" req (beers-index req))
-  (PUT "/beers/:id" req (beers-add req))
-  (GET "/beers/search/:query" req (beers-search req))
-  (PUT "/votes/:beer_id" req (vote-toggle req)))
+  (GET "/items" req (items-index req))
+  (PUT "/items" req (items-add req))
+  (PUT "/votes/:item_id" req (vote-toggle req)))
