@@ -7,33 +7,11 @@
 
 (enable-console-print!)
 
-(extend-type string
-  ICloneable
-  (-clone [s] (js/String. s)))
-
-(extend-type js/String
-  om/IValue
-  (-value [s] (str s))
-  ICloneable
-  (-clone [s] (js/String. s)))
-
-(extend-type number
-  ICloneable
-  (-clone [n] (js/Number. n)))
-
-(extend-type js/Number
-  om/IValue
-  (-value [n] (.valueOf n))
-  ICloneable
-  (-clone [n] (js/Number. n)))
-
 (defn sort-by-votes
   [item-map]
   (into [] (sort-by :votes > item-map)))
 
-(defonce app-state (atom {:item-list []
-                          :new-item ""
-                          :typeahead-selected nil}))
+(defonce app-state (atom {:item-list []}))
 
 (defn upvote-item!
   [e item]
@@ -46,77 +24,95 @@
                      (inc (:votes item)))}))
   (PUT (str "votes/" (:id item)) {:error-handler #(om/update! item item)}))
 
-(defn item-view
-  [item owner]
-  (reify
-    om/IRender
-    (render [_]
-      (dom/li nil
-        (:title item)
-        " (" (.toString (:votes item)) ")"
-        (dom/button #js {:onClick #(upvote-item! % item)} "Vote")))))
-
-(defn typeahead-view
-  [item owner]
-  (reify
-    om/IRender
-    (render [_]
-      (dom/li #js {:style #js {:fontWeight (if (:selected item) "bold" "normal")}}
-        (:title item)))))
+(defn typeahead-item
+  [item]
+  (om/component
+    (dom/li #js {:style #js {:fontWeight (if (:selected item) "bold" "normal")}}
+            (:title item))))
 
 (defn handle-change [e owner state data]
   (let [value (.. e -target -value)]
-    (om/set-state! owner :new-item value)))
+    (om/set-state! owner :new-item value)
+    (om/set-state! owner :filtered (filterv #(zero? (.indexOf (:title %) value)) data))))
 
-; (defn new-selected
-;   [direction data]
-;   (if (= direction "up")
-;     (max 0 (dec (get-in data [:typeahead :selected])))
-;     (min (dec (count (get-in data [:typeahead :list])))
-;          (inc (get-in data [:typeahead :selected])))))
+(defn new-selected
+  [direction currently-selected total-items]
+  (if (= direction "up")
+    (max 0 (dec currently-selected))
+    (min (dec total-items)
+         (inc currently-selected))))
 
-(defn sync-list! [data]
+(defn handle-typeahead-focus
+  [direction owner currently-selected total-items]
+  (om/set-state! owner :selected (new-selected direction currently-selected total-items)))
+
+(defn sync-list! [items]
   (GET "items"
-       {:handler #(om/update!
-                    data
-                    (assoc data :item-list (keywordize-keys %)))}))
+       {:handler #(om/update! items (keywordize-keys %))}))
 
 (defn add-to-list!
-  [item data]
+  [item items]
   (PUT "items"
        {:format :json
         :params {:title item}
-        :handler #(sync-list! data)}))
+        :handler #(sync-list! items)}))
 
-(defn item-list-view
+(defn modernator-input
   [data owner]
   (reify
     om/IInitState
     (init-state [_]
-      {:new-item ""})
-    om/IWillMount
-    (will-mount [_]
-      (sync-list! data))
+      {:new-item ""
+       :selected nil
+       :filtered data})
     om/IRenderState
-    (render-state [this state]
+    (render-state [_ state]
       (dom/div nil
-        (dom/h1 nil "List")
         (dom/input #js {:type "text" :ref "new-item"
                         :onChange #(handle-change % owner state data)
-                        :onKeyDown #(case (.-key %)
-                                      ; "ArrowUp" (om/update! data (assoc-in data [:typeahead-selected] (new-selected "up" data)))
-                                      ; "ArrowDown" (om/update! data (assoc-in data [:typeahead-selected] (new-selected "down" data)))
-                                      "Enter" (add-to-list! (:new-item state) data)
-                                      nil)
-                        :value (:new-item state)})
-        (apply dom/ul #js {:className "typeahead-list"}
-          (om/build-all typeahead-view (map-indexed #(let [selected-index (:typeahead-selected data)
-                                                           item %2
-                                                           index %1]
-                                                       (assoc item :selected (= index selected-index)))
-                                                    (filterv #(zero? (.indexOf (:title %) (:new-item state))) (:item-list data)))))
-        (apply dom/ul #js {:className "item-list"}
-          (om/build-all item-view (sort-by-votes (:item-list data))))))))
+                        :onKeyDown #(let [currently-selected (or (:selected state) -1)
+                                          typeahead-results (:filtered state)
+                                          total-items (count typeahead-results)]
+                                      (case (.-key %)
+                                        "ArrowUp" (handle-typeahead-focus "up" owner currently-selected total-items)
+                                        "ArrowDown" (handle-typeahead-focus "down" owner currently-selected total-items)
+                                        "Enter" (add-to-list! (:new-item state) data)
+                                        (om/set-state! owner :selected nil)))
+                        :value (let [currently-selected (:selected state)]
+                                 (if-not (nil? currently-selected)
+                                   (get-in (:filtered state) [currently-selected :title])
+                                   (:new-item state)))})
+        (when (not (string/blank? (:new-item state)))
+          (apply dom/ul #js {:className "typeahead-list"}
+                 (om/build-all typeahead-item (map-indexed #(let [selected-index (:selected state)
+                                                                  item %2
+                                                                  index %1]
+                                                              (assoc item :selected (= index selected-index)))
+                                                           (:filtered state)))))))))
 
-(om/root item-list-view app-state
+(defn modernator-item
+  [data owner]
+  (om/component
+    (dom/li nil
+      (:title data)
+      " (" (.toString (:votes data)) ")"
+      (dom/button #js {:onClick #(upvote-item! % data)} "Vote"))))
+
+(defn modernator
+  [data owner]
+  (reify
+    om/IWillMount
+    (will-mount [_]
+      (sync-list! (:item-list data)))
+    om/IRender
+    (render [_]
+      (dom/div nil
+        (dom/h1 nil "List")
+
+        (om/build modernator-input (:item-list data))
+
+        (apply dom/ul #js {:className "item-list"}
+          (om/build-all modernator-item (sort-by-votes (:item-list data))))))))
+
+(om/root modernator app-state
   {:target (. js/document (getElementById "app"))})
