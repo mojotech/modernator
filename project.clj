@@ -27,7 +27,8 @@
                  [ragtime/ragtime.sql.files "0.3.8"]]
   :main ^:skip-aot modernator.core
   :plugins [[ragtime/ragtime.lein "0.3.8"]
-            [lein-cljsbuild "1.0.5"]]
+            [lein-cljsbuild "1.0.5"]
+            [lein-haml-sass "0.2.7-SNAPSHOT"]]
   :ragtime {:migrations ragtime.sql.files/migrations
             :database "jdbc:postgresql://localhost:5432/modernator"}
   :target-path "target/%s"
@@ -38,4 +39,7 @@
                         :compiler
                         {:output-to "resources/public/js/app.js",
                          :asset-path "/static/js/out"
-                         :pretty-print true}}]})
+                         :pretty-print true}}]}
+  :sass {:src "resources/sass"
+         :output-extension "css"
+         :output-directory "resources/public/css"})

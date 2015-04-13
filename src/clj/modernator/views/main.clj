@@ -8,7 +8,8 @@
     [:head
      [:meta {:charset "utf8"}]
      [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge, chrome=1"}]
-     [:title "Modernator"]]
+     [:title "Modernator"]
+     (page/include-css "/public/css/styles.css")]
 
     [:link {:href "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" :rel "stylesheet" :type "text/css"}]
     [:link {:href "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" :rel "stylesheet" :type "text/css"}]
@@ -27,6 +28,7 @@
   (page/html5
     [:head
      [:title "Modernator :: Signup"]
+     (page/include-css "/public/css/styles.css")
      [:link {:href "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" :rel "stylesheet" :type "text/css"}]
      [:link {:href "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" :rel "stylesheet" :type "text/css"}]]
     [:body
@@ -55,6 +57,7 @@
   (page/html5
     [:head
      [:title "Modernator :: Signup"]
+     (page/include-css "/public/css/styles.css")
      [:link {:href "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" :rel "stylesheet" :type "text/css"}]
      [:link {:href "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" :rel "stylesheet" :type "text/css"}]]
     [:body
