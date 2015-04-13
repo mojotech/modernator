@@ -1,0 +1,33 @@
+@import "_fonts"
+
+$font-regular= 'Effra-Regular', sans-serif
+$font-medium= 'EffraMedium-Regular', sans-serif
+
+$color-primary= #e62f4f
+$color-secondary= #330a11
+$color-accent= #a5a9b5
+$color-shade= #f6f6f8
+$color-border= #dfdfdf
+
+$block= 30px
+$block-med= 20px
+$block-small= 8px
+$block-large= 50px
+
+ //define default values (best to put this in the default.styl file)
+ base-font-size = 16
+ base-line-height = 24
+
+ //This is the useful part: it compares the given value to the base values and calculates the correct output
+ font-size($fontValue = base-font-size, $baseFontValue = base-font-size, $baseLineValue = base-line-height)
+   font-size   $fontValue px
+   font-size   ($fontValue / $baseFontValue) rem
+
+clearfix()
+  *zoom: 1;
+  &:before,
+  &:after
+    content: '';
+    display: table;
+  &:after
+    clear: both;
