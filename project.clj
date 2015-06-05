@@ -20,6 +20,7 @@
                  [ring/ring-jetty-adapter "1.3.2"]
                  [ring-transit "0.1.3"]
                  [compojure "1.1.6"]
+                 [clout "2.1.2"]
                  [com.draines/postal "1.11.3"]
                  [hiccup "1.0.4"]
                  [crypto-random "1.2.0"]

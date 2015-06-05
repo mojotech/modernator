@@ -3,11 +3,14 @@
             [om.dom :as dom :include-macros true]
             [clojure.string :as string]
             [clojure.walk :refer [keywordize-keys]]
-            [ajax.core :refer [GET POST PUT]]))
+            [ajax.core :refer [GET PUT]]))
 
 (enable-console-print!)
 
 (defonce app-state (atom {:item-list []}))
+
+(defn url [suffix]
+  (str (.-pathname (.-location js/window)) "/" suffix))
 
 (defn sort-by-votes
   [item-map]
@@ -29,7 +32,7 @@
             :votes (if (:upvoted item)
                      (dec (:votes item))
                      (inc (:votes item)))}))
-  (PUT (str "votes/" (:id item)) {:error-handler #(om/update! item item)}))
+  (PUT (str (url "votes/") (:id item)) {:error-handler #(om/update! item item)}))
 
 (defn handle-change! [e owner state data]
   (let [value (.. e -target -value)]
@@ -41,12 +44,12 @@
   (om/set-state! owner :selected (new-selected direction currently-selected total-items)))
 
 (defn sync-list! [items]
-  (GET "items"
+  (GET (url "items")
        {:handler #(om/update! items (keywordize-keys %))}))
 
 (defn add-to-list!
   [item items]
-  (PUT "items"
+  (PUT (url "items")
        {:format :json
         :params {:title item}
         :handler #(sync-list! items)}))

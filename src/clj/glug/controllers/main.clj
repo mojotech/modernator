@@ -51,10 +51,11 @@
                 #(= (:id user) (:id %))
                 (models/users-find "crowd_id" (:crowd_id user))))
 
-        {:status 302
-         :headers {"Location" "/"}
-         :cookies {"user-id" {:value (:id user) :path "/"}
-                   "auth-token" {:value (:auth_token user) :path "/"}}}))))
+        (let [list-url (str "/" (:name (models/crowd-find "id" (:crowd_id user))))]
+          {:status 302
+           :headers {"Location" list-url}
+           :cookies {"user-id" {:value (:id user) :path list-url}
+                     "auth-token" {:value (:auth_token user) :path list-url}}})))))
 
 (defn user-activate [auth-token]
   (let [user (models/user-find "auth_token" auth-token)]
@@ -63,10 +64,11 @@
       (do
         (models/user-update {:is_verified true} ["id = ?" (:id user)])
 
-        {:status 302
-         :headers {"Location" "/"}
-         :cookies {"user-id" {:value (:id user) :path "/"}
-                   "auth-token" {:value (:auth_token user) :path "/"}}}))))
+        (let [list-url (str "/" (:name (models/crowd-find "id" (:crowd_id user))))]
+          {:status 302
+           :headers {"Location" list-url}
+           :cookies {"user-id" {:value (:id user) :path list-url}
+                     "auth-token" {:value (:auth_token user) :path list-url}}})))))
 
 (defn items-index [req]
   (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
@@ -122,7 +124,7 @@
   (GET "/confirm-crowd/:auth-token" [auth-token] (crowd-activate auth-token))
   (GET "/confirm-user/:auth-token" [auth-token] (user-activate auth-token))
 
-  (GET "/" [] (views/index))
-  (GET "/items" req (items-index req))
-  (PUT "/items" req (items-add req))
-  (PUT "/votes/:item_id" req (vote-toggle req)))
+  (GET "/:list" req (views/index req))
+  (GET "/:list/items" req (items-index req))
+  (PUT "/:list/items" req (items-add req))
+  (PUT "/:list/votes/:item_id" req (vote-toggle req)))

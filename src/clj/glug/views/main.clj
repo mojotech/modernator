@@ -3,7 +3,7 @@
            [hiccup.form :as form])
   (:gen-class))
 
-(defn index []
+(defn index [_]
   (page/html5
     [:head
      [:meta {:charset "utf8"}]

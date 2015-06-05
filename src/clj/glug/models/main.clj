@@ -12,11 +12,17 @@
 (defn crowd-create [crowd]
   (first (sql/insert! spec :crowds crowd)))
 
+(defn crowd-find [column value]
+  (first (sql/query spec [(str "select * from crowds where " column " = ?") value])))
+
 (defn user-update [set-map where-clause]
   (sql/update! spec :users set-map where-clause))
 
 (defn user-find [column value]
   (first (sql/query spec [(str "select * from users where " column " = ?") value])))
+
+(defn user-find-by-id-and-list [id m-list]
+  (first (sql/query spec [(str "select * from users where id = ? and crowd_id = ?") id m-list])))
 
 (defn users-find [column value]
   (sql/query spec [(str "select * from users where " column " = ?") value]))
@@ -43,11 +49,11 @@
   (sql/query spec [(str "select user_id from votes where " column " = ?") value]))
 
 (defn find-voters [item-id]
-  (let [vote-user-ids (mapv #(:user_id %) 
+  (let [vote-user-ids (mapv #(:user_id %)
                              (votes-find "item_id" item-id))]
     (if-not (empty? vote-user-ids)
-      (sql/query spec [(str "select * from users where id in (" 
-                            (clojure.string/join "," vote-user-ids) 
+      (sql/query spec [(str "select * from users where id in ("
+                            (clojure.string/join "," vote-user-ids)
                             ")")])
       '())))
 
