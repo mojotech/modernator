@@ -10,6 +10,7 @@ html
 
 body
   background: white
+  font-family: $font-regular
 
 img
   max-width: 100%
@@ -47,9 +48,40 @@ p
   font-size(15)
 
 .input-search
+  font-family: $font-medium
   border: 2px solid $color-border
   border-radius: 3px
-  padding: 10px 5px
+  padding: 10px 30px
+  width: 100%
+
+.typeahead-list
+  position: absolute
+  width: 100%
+  z-index: 500
+  background: rgba(255, 255, 255, 0.95)
+  border: 2px solid $color-border
+  border-radius: 5px
+  margin-top: 20px
+
+  li
+    padding: 30px
+    border-bottom: 1px solid $color-border
+
+    &:first-child
+      border-radius: 4px 4px 0 0
+
+    &:last-child
+      border-bottom-width: 0
+      border-radius: 0 0 4px 4px
+
+    &.active
+      background-color: lighten(#dfdfdf, 70%)
+
+      &::after
+        content: "(Enter to upvote this one!)"
+        font-style: italic
+        float: right
+        opacity: 0.5
 
 .btn
   border 0

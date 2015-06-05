@@ -11,6 +11,12 @@ var gulp            = require('gulp'),
     _if             = require('gulp-if'),
     isWindows       = /^win/.test(require('os').platform());
 
+// --- Fonts ---
+gulp.task('copyFonts', function() {
+  gulp.src('./fonts/**')
+  .pipe(gulp.dest('../../resources/public/fonts'));
+});
+
 // --- Stylus ---
 gulp.task('stylus', function () {
   gulp.src('./styles/*.styl')
@@ -57,4 +63,4 @@ gulp.task('watch', function () {
 });
 
 // --- Default task ---
-gulp.task('default', ['stylus', 'rename', 'watch']);
+gulp.task('default', ['copyFonts', 'stylus', 'rename', 'watch']);
