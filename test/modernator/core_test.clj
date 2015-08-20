@@ -1,6 +1,6 @@
-(ns glug.core-test
+(ns modernator.core-test
   (:require [clojure.test :refer :all]
-            [glug.core :refer :all]))
+            [modernator.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

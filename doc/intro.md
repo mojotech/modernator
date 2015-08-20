@@ -1,3 +1,3 @@
-# Introduction to glug
+# Introduction to Modernator
 
 TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
