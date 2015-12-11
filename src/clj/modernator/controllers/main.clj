@@ -4,9 +4,9 @@
             [ring.util.response :as response]
             [clj-time.core :as t]
             [digest :refer [digest]]
-            [postal.core :as postal]
             [clojure.string :as string]
             [modernator.views.main :as views]
+            [modernator.models.mailer :as mailer]
             [modernator.models.main :as models]))
 
 (defn list-create [req]
@@ -22,12 +22,10 @@
       (mapv #(hash-map :email % :list_id (:id m-list))
             (string/split (:list_emails params) #" ")))
 
-    (postal/send-message
-      {:from "jake+adam@mojotech.com"
-       :to (:email params)
+    (mailer/send-message!
+      {:to (:email params)
        :subject "Get Started with Modernator!"
-       :body [{:type "text/html"
-               :content (views/admin-welcome-email (:auth_token owner))}]})
+       :content (views/admin-welcome-email (:auth_token owner))})
 
     (models/user-update {:list_id (:id m-list) :was_invited true} ["id=?" (:id owner)])
 
@@ -41,12 +39,10 @@
         (models/user-update {:is_verified true} ["id = ?" (:id user)])
 
         (pmap #(when (not= (:was_invited (models/user-find "id" (:id %))) true)
-                 (postal/send-message
-                   {:from "jake+adam@mojotech.com"
-                    :to (:email %)
+                 (mailer/send-message!
+                   {:to (:email %)
                     :subject "You Were Invited to Collaborate!"
-                    :body [{:type "text/html"
-                            :content (views/user-welcome-email (:auth_token %))}]})
+                    :content (views/user-welcome-email (:auth_token %))})
                  (models/user-update {:was_invited true} ["id = ?" (:id %)]))
               (remove
                 #(= (:id user) (:id %))
