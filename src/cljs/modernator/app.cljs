@@ -153,7 +153,7 @@
       (dom/div #js {:className "right"}
         (apply dom/div #js {:className "avatars"}
           (om/build-all gravatar (:voter-gravatar-hashes data)))
-        (dom/button #js {:className "btn btn-circle"}
+        (apply dom/div #js {:className "circle vote-count"}
           (.toString (:votes data)))
         (dom/button #js {:className (str "btn btn-circle"
                                          (when (:upvoted data) " active"))}
