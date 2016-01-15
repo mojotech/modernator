@@ -41,8 +41,14 @@ p
 
 .site-header
   border-bottom: 1px solid $color-border
-  margin-bottom: $block-large
   padding: $block-med
+  height: $header-height
+  line-height: $header-height
+  position: fixed
+  left: 0
+  right: 0
+  z-index: 10
+  background: white
 
 .logo
   top: 3px
@@ -156,6 +162,7 @@ label
 
 .content
   margin: 0 auto
+  padding-top: $header-height + $block-large
   max-width: 800px
 
 .the-list
