@@ -102,6 +102,8 @@ label {
 .new-item {
   padding: 10px 10px 10px 36px;
   z-index: 20;
+  width: calc(100% - 146px);
+
   &:focus {
     outline: none;
   }
