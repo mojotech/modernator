@@ -41,8 +41,14 @@ p
 
 .site-header
   border-bottom: 1px solid $color-border
-  margin-bottom: $block-large
   padding: $block-med
+  height: $header-height
+  line-height: $header-height
+  position: fixed
+  left: 0
+  right: 0
+  z-index: 10
+  background: white
 
 .logo
   top: 3px
@@ -117,6 +123,7 @@ label
   border: 0
   outline: none
   transition: all 0.15s linear
+  display: inline-block
 
 .btn-primary
   background: $color-primary
@@ -134,16 +141,20 @@ label
 .text-center
   text-align: center
 
-.btn-circle
+.circle, .btn-circle
+  display: inline-block
   background-color: white
   border: 2px solid $color-border
   border-radius: 100%
   height: 32px
+  line-height: 29px
   margin-left: $block-small
   padding: 0
   width: 32px
   text-align: center
   vertical-align: top
+
+.btn-circle
   &:hover
     border-color: $color-accent
   &.active
@@ -156,7 +167,51 @@ label
 
 .content
   margin: 0 auto
+  padding-top: $header-height + $block-large
   max-width: 800px
+
+.recently-added
+  position: fixed
+  right: 0
+  width: 300px
+  top: 62px
+  bottom: 0
+  padding: 10px 20px
+  background: #f7f7f7
+  overflow: auto
+
+  .list-item
+    position: relative
+    top: auto !important
+    padding: 10px 0 10px 25px
+    background: none
+
+    &:hover
+      .controls, .vote-count
+        opacity: 1
+
+  .avatars
+    display: none
+
+  .meta
+    +font-size(12)
+
+  .item
+    +font-size(18)
+
+  .vote-count, .controls
+    transition: 0.3s opacity
+
+  .controls
+    opacity: 0.6
+    position: absolute
+    right: 0
+    top: 0
+    bottom: 0
+    padding-top: 11px
+
+  .vote-count
+    opacity: 0
 
 .the-list
   list-style: none
