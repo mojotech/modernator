@@ -16,4 +16,21 @@
   * `forego start`
   * navigate to http://localhost:8080
 
+# deploy
+
+  * Set up box with [postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04)
+    and [java](https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get) (just jre)
+    * Create postgres user
+  * Run migrations from migrations folder (still up in the air about the best way, I just scp-ed the files up and ran them)
+  * Create uberjar from project (`lein uberjar`)
+  * Upload standalone jar to box
+  * Set appropriate env vars
+    * `export MODERNATOR_URL=http://<domain_or_ip>:8080/`
+    * `export DATABASE_URL=postgres://user:password@localhost:5432/modernator`
+    * `export SMTP_HOST=`
+    * `export SMTP_USER=`
+    * `export SMTP_PASS=`
+  * `java -jar <the_jar>`
+  * See the fruit of your labor at http://<domain_or_ip>:8080
+
 Copyright © 2015 MojoTech
