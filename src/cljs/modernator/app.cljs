@@ -150,7 +150,7 @@
           (:added-by data)
           "  •  "
           (dom/time nil "Created on " (:created-at data))))
-      (dom/div #js {:className "right"}
+      (dom/div #js {:className "right controls"}
         (apply dom/div #js {:className "avatars"}
           (om/build-all gravatar (:voter-gravatar-hashes data)))
         (apply dom/div #js {:className "circle vote-count"}
@@ -172,7 +172,15 @@
         (fn [] (sync-list!)) 1000))
     om/IRender
     (render [_]
-      (dom/div nil
+      (dom/div
+        nil
+
+        (dom/div #js {:className "recently-added"}
+                 (dom/h2 #js {:className "h2"} "Recently Added")
+                 (apply dom/ul
+                        nil
+                        (om/build-all modernator-item (print-and-return (sort-by :created-at > items-with-orders)))))
+
         (om/build modernator-input (:item-list data))
 
         (apply dom/ul #js {:className "the-list"}
