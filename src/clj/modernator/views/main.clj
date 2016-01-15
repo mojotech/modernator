@@ -36,7 +36,7 @@
       [:h1.header-title
        [:i.icon-logo.logo]
        "Modernator"]]
-     [:section.content
+     [:section.content.sign-up
       (form/form-to
         [:post ""]
         [:div
