@@ -49,7 +49,7 @@
 (defn partial-complete
   [needle attr haystack]
   (when-not (empty? needle)
-    (let [pattern (js/RegExp. (str ".* " needle ".*|" needle ".*") "i")]
+    (let [pattern (js/RegExp. (str "^" needle ".*") "i")]
       (not-empty (filterv #(re-matches pattern (get % attr)) haystack)))))
 
 (defn handle-change! [e owner state data]
