@@ -152,7 +152,7 @@
           (dom/time nil "Created on " (:created-at data))))
       (dom/div #js {:className "right controls"}
         (apply dom/div #js {:className "avatars"}
-          (om/build-all gravatar (:voter-gravatar-hashes data)))
+          (om/build-all gravatar (take 4 (:voter-gravatar-hashes data))))
         (apply dom/div #js {:className "circle vote-count"}
           (.toString (:votes data)))
         (dom/button #js {:className (str "btn btn-circle"
