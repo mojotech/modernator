@@ -17,6 +17,10 @@
   * `forego start`
   * navigate to http://localhost:8080
 
+### Environment
+
+To add or configure environment variables differently than [the default](src/clj/modernator/config.clj), simply copy the `.lein-env.sample` file and name it `.lein-env`.
+
 # deploy
 
   * Set up box with [postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04)

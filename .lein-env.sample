@@ -1,0 +1,2 @@
+{:modernator-url "http://localhost:8080"
+ :database-url "postgres://localhost:5432/modernator"}

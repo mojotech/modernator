@@ -1,10 +1,11 @@
 (ns modernator.models.mailer
-  (:require [postal.core :as postal]))
+  (:require [postal.core :as postal]
+            [modernator.config :refer [config]]))
 
 (defn send-message! [message]
-  (let [smtp-host (System/getenv "SMTP_HOST")
-        smtp-user (System/getenv "SMTP_USER")
-        smtp-pass (System/getenv "SMTP_PASS")]
+  (let [smtp-host (config :smtp-host)
+        smtp-user (config :smtp-user)
+        smtp-pass (config :smtp-pass)]
     (if smtp-host
       (postal/send-message
         {:host smtp-host

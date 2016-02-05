@@ -1,10 +1,10 @@
 (ns modernator.models.main
   (:require [clojure.java.jdbc :as sql]
             [clojure.string :as str]
-            [crypto.random :as random]))
+            [crypto.random :as random]
+            [modernator.config :refer [config]]))
 
-(def spec (or (System/getenv "DATABASE_URL")
-              "postgresql://localhost:5432/modernator"))
+(def spec (config :database-url))
 
 (defn users-create [users]
   (apply sql/insert! spec :users (mapv #(assoc % :auth_token (random/url-part 20)) users)))
