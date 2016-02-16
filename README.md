@@ -5,7 +5,7 @@
 
   * [postgres](http://postgresapp.com/)
   * [leiningen](http://leiningen.org/)
-  * [forego](https://github.com/ddollar/forego) `brew install forego`
+  * [foreman](https://github.com/ddollar/foreman) `gem install foreman`
 
 # database
 
@@ -14,7 +14,7 @@
 
 # local dev
 
-  * `forego start`
+  * `foreman start`
   * navigate to http://localhost:8080
 
 ### Environment
