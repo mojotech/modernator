@@ -13,6 +13,7 @@ html {
 body {
   background: white;
   font-family: $font-regular;
+  margin: 0;
 }
 
 img {
@@ -198,7 +199,7 @@ label {
 
 .content {
   margin: 0 auto;
-  padding-top: $header-height + $block-large;
+  padding: ($header-height + $block-large) 20px 20px;
   max-width: 800px;
 }
 
@@ -206,10 +207,12 @@ label {
   max-width: 600px;
 }
 
+$recently-added-width: 300px;
+
 .recently-added {
   position: fixed;
   right: 0;
-  width: 300px;
+  width: $recently-added-width;
   top: 62px;
   bottom: 0;
   padding: 10px 20px;
@@ -248,6 +251,19 @@ label {
   }
   .vote-count {
     opacity: 0;
+  }
+}
+
+.list-wrapper {
+  position: fixed;
+  left: 0;
+  top: 62px;
+  bottom: 0;
+  overflow: auto;
+  width: calc(100% - #{$recently-added-width});
+
+  .content {
+    padding-top: $block-large;
   }
 }
 
