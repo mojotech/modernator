@@ -19,8 +19,7 @@
       [:h1.header-title
        [:i.icon-logo.logo]
        "Modernator"]]
-     [:section.content
-      [:div#app ""]]
+     [:div#app ""]
      (page/include-js
        "http://underscorejs.org/underscore.js"
        "/public/js/app.js")]))

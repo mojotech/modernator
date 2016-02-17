@@ -181,13 +181,14 @@
                         nil
                         (om/build-all modernator-item (sort-by :created-at > (:item-list data)))))
 
-        (om/build modernator-input (:item-list data))
-
-        (apply dom/ul #js {:className "the-list"}
-          (let [items (:item-list data)
-                index-map (zipmap (map #(-> % :id) (sort-by-votes items)) (range))
-                items-with-orders (map #(assoc % :order (get index-map (:id %))) items)]
-            (om/build-all modernator-item items-with-orders)))))))
+        (dom/div #js {:className "list-wrapper"}
+          (dom/div #js {:className "content"}
+            (om/build modernator-input (:item-list data))
+            (apply dom/ul #js {:className "the-list"}
+              (let [items (:item-list data)
+                    index-map (zipmap (map #(-> % :id) (sort-by-votes items)) (range))
+                    items-with-orders (map #(assoc % :order (get index-map (:id %))) items)]
+                (om/build-all modernator-item items-with-orders)))))))))
 
 (om/root modernator app-state
   {:target (. js/document (getElementById "app"))})
