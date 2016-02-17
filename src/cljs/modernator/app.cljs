@@ -16,8 +16,11 @@
 (defn list-items []
   (om/ref-cursor (:items (om/root-cursor app-state))))
 
+(defn list-title []
+  (.-pathname (.-location js/window)))
+
 (defn url [suffix]
-  (str (.-pathname (.-location js/window)) "/" suffix))
+  (str (list-title) "/" suffix))
 
 (defn sort-by-votes
   [item-map]
@@ -183,6 +186,7 @@
 
         (dom/div #js {:className "list-wrapper"}
           (dom/div #js {:className "content"}
+            (dom/h1 #js {:className "list-title"} (string/replace (list-title) #"/" ""))
             (om/build modernator-input (:item-list data))
             (apply dom/ul #js {:className "the-list"}
               (let [items (:item-list data)
