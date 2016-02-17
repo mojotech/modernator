@@ -5,7 +5,7 @@
 
   * [postgres](http://postgresapp.com/)
   * [leiningen](http://leiningen.org/)
-  * [forego](https://github.com/ddollar/forego) `brew install forego`
+  * [foreman](https://github.com/ddollar/foreman) `gem install foreman`
 
 # database
 
@@ -14,8 +14,12 @@
 
 # local dev
 
-  * `forego start`
+  * `foreman start`
   * navigate to http://localhost:8080
+
+### Environment
+
+To add or configure environment variables differently than [the default](src/clj/modernator/config.clj), simply copy the `.lein-env.sample` file and name it `.lein-env`.
 
 # deploy
 

@@ -1,6 +1,7 @@
 (ns modernator.views.main
   (require [hiccup.page :as page]
-           [hiccup.form :as form])
+           [hiccup.form :as form]
+           [modernator.config :refer [config]])
   (:gen-class))
 
 (defn index [_]
@@ -73,9 +74,9 @@
     [:body
      [:p "Hey There!"]
      [:p "We got a signup from your email on "
-      [:a {:href (str (System/getenv "MODERNATOR_URL"))} "Modernator"]
+      [:a {:href (str (config :modernator-url))} "Modernator"]
       ", So if you legitimately signed up for this, how about you "
-      [:a {:href (str (System/getenv "MODERNATOR_URL") "confirm-list/" auth-token)}
+      [:a {:href (str (config :modernator-url) "confirm-list/" auth-token)}
        "send invites to your list and start using modernator!"]]
      [:p "If you didn't sign up for this, sorry about that, looks like you got trolled."]
      [:p "Happy Collaborating,"]
@@ -87,7 +88,7 @@
      [:p "Hey There!"]
      [:p "You were added to a group to collaborate... on something..."]
      [:p "So why don't you go ahead and "
-      [:a {:href (str (System/getenv "MODERNATOR_URL") "confirm-user/" auth-token)}
+      [:a {:href (str (config :modernator-url) "confirm-user/" auth-token)}
        "start collaborating"]
       "."]
      [:p "Happy Collaborating,"]

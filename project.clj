@@ -24,7 +24,8 @@
                  [com.draines/postal "1.11.3"]
                  [hiccup "1.0.4"]
                  [crypto-random "1.2.0"]
-                 [ragtime/ragtime.sql.files "0.3.8"]]
+                 [ragtime/ragtime.sql.files "0.3.8"]
+                 [environ "1.0.2"]]
   :main modernator.core
   :plugins [[ragtime/ragtime.lein "0.3.8"]
             [lein-cljsbuild "1.0.5"]
