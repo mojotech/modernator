@@ -179,7 +179,7 @@
                  (dom/h2 #js {:className "h2"} "Recently Added")
                  (apply dom/ul
                         nil
-                        (om/build-all modernator-item (print-and-return (sort-by :created-at > items-with-orders)))))
+                        (om/build-all modernator-item (sort-by :created-at > (:item-list data)))))
 
         (om/build modernator-input (:item-list data))
 
