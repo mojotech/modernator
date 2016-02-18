@@ -199,8 +199,13 @@ label {
 
 .content {
   margin: 0 auto;
-  padding: ($header-height + $block-large) 20px 20px;
+  padding: $header-height 20px 20px;
   max-width: 800px;
+
+  h1 {
+    color: $color-secondary;
+    padding: 20px 0;
+  }
 }
 
 .sign-up {
