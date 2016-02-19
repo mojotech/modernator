@@ -1,0 +1,4 @@
+ALTER TABLE votes DROP COLUMN user_secret_token;
+
+ALTER TABLE votes ALTER COLUMN user_id SET NOT NULL;
+ALTER TABLE items ALTER COLUMN added_by SET NOT NULL;
