@@ -273,6 +273,10 @@ $recently-added-width: 300px;
   }
 }
 
+.submit-anonymously {
+  @include clearfix;
+}
+
 .the-list {
   list-style: none;
   margin-top: $block-large - $block;
