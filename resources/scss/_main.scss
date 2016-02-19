@@ -104,6 +104,7 @@ label {
   padding: 10px 10px 10px 36px;
   z-index: 20;
   width: calc(100% - 146px);
+  @include font-size(16);
 
   &:focus {
     outline: none;
