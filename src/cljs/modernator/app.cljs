@@ -7,7 +7,8 @@
 
 (enable-console-print!)
 
-(defonce app-state (atom {:item-list []}))
+(defonce app-state (atom {:item-list []
+                          :submitting-anonymously [false]}))
 
 (defn print-and-return [args]
   (println args)
@@ -46,7 +47,9 @@
             :votes (if (:upvoted item)
                      (dec (:votes item))
                      (inc (:votes item)))}))
-  (PUT (str (url "votes/") (:id item)) {:error-handler #(om/update! item item)
+  (PUT (str (url "votes/") (:id item)) {:format :json
+                                        :params {:submitting_anonymously (-> @app-state :submitting-anonymously first)}
+                                        :error-handler #(om/update! item item)
                                         :handler #(sync-list!)}))
 
 (defn partial-complete
@@ -72,10 +75,24 @@
     (when-not (empty? (print-and-return current))
       (PUT (url "items")
            {:format :json
-            :params {:title (print-and-return current)}
+            :params {:title (print-and-return current)
+                     :submitting_anonymously (-> @app-state :submitting-anonymously first)}
             :handler #(sync-list!)})
       (om/set-state! owner :selected nil)
       (om/set-state! owner :new-item nil))))
+
+(defn submit-anonymously
+  [data owner]
+  (reify
+    om/IRenderState
+    (render-state [_ state]
+      (dom/div #js {:className "submit-anonymously"}
+        (dom/label #js {:className "right"}
+          "Submit and Vote Anonymously "
+          (dom/input #js {:type "checkbox" :ref "submit-anonymously"
+                          :id "submit-anonymously"
+                          :checked (first data)
+                          :onChange #(om/update! data [(.. % -target -checked)])}))))))
 
 (defn modernator-input
   [data owner]
@@ -188,6 +205,7 @@
           (dom/div #js {:className "content"}
             (dom/h1 #js {:className "list-title"} (string/replace (list-title) #"/" ""))
             (om/build modernator-input (:item-list data))
+            (om/build submit-anonymously (:submitting-anonymously data))
             (apply dom/ul #js {:className "the-list"}
               (let [items (:item-list data)
                     index-map (zipmap (map #(-> % :id) (sort-by-votes items)) (range))
