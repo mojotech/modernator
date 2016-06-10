@@ -1,7 +1,7 @@
-(ns modernator.controllers.main
+(ns modernator.controllers.vote
   (:require [modernator.models.main :as models]))
 
-(defn vote-toggle [req]
+(defn toggle [req]
   (let [user-id (Integer. (:value (get (:cookies req) "user-id")))
         item-id (Integer. (get-in req [:params :item_id]))
         list-id (:list_id (models/user-find "id" user-id))

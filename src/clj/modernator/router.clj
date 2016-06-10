@@ -4,7 +4,7 @@
             [modernator.controllers.list :as list]
             [modernator.controllers.user :as user]
             [modernator.controllers.item :as item]
-            [modernator.controllers.main :as controller]))
+            [modernator.controllers.vote :as vote]))
 
 (defroutes router
   (GET "/signup" [] (views/signup))
@@ -16,4 +16,4 @@
   (GET "/:list" req (views/index req))
   (GET "/:list/items" req (item/index req))
   (PUT "/:list/items" req (item/add req))
-  (PUT "/:list/votes/:item_id" req (controller/vote-toggle req)))
+  (PUT "/:list/votes/:item_id" req (vote/toggle req)))
