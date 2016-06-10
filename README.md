@@ -5,6 +5,7 @@
 
   * [postgres](http://postgresapp.com/)
   * [leiningen](http://leiningen.org/)
+    * Install via homebrew `brew install leiningen`
   * [foreman](https://github.com/ddollar/foreman) `gem install foreman`
 
 # database
