@@ -1,6 +1,5 @@
 (ns modernator.controllers.main
-  (:require [compojure.core :refer [defroutes GET POST PUT]]
-            [clojure.walk :refer [keywordize-keys]]
+  (:require [clojure.walk :refer [keywordize-keys]]
             [ring.util.response :as response]
             [clj-time.core :as t]
             [digest :refer [digest]]
@@ -123,15 +122,3 @@
       (models/vote-create {:list_id list-id :item_id item-id :user_id user-id} submitting-anonymously?)
       (models/vote-delete (:id vote)))
     {:status 200}))
-
-(defroutes main
-  (GET "/signup" [] (views/signup))
-  (POST "/signup" req (list-create req))
-  (GET "/signup-confirm" [] (views/signup-confirm))
-  (GET "/confirm-list/:auth-token" [auth-token] (list-activate auth-token))
-  (GET "/confirm-user/:auth-token" [auth-token] (user-activate auth-token))
-
-  (GET "/:list" req (views/index req))
-  (GET "/:list/items" req (items-index req))
-  (PUT "/:list/items" req (items-add req))
-  (PUT "/:list/votes/:item_id" req (vote-toggle req)))

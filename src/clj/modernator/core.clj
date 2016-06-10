@@ -9,7 +9,7 @@
            [ring.middleware.cookies :as cookies]
            [ring.middleware.transit :refer [wrap-transit-response]]
            [modernator.models.main :as models]
-           [modernator.controllers.main :as controllers])
+           [modernator.router :refer [router]])
   (:gen-class))
 
 (def public-uri-bases #{"/signup" "/confirm-" "/public"})
@@ -29,7 +29,7 @@
         (response/redirect "/signup")))))
 
 (defroutes routes
-  (-> controllers/main
+  (-> router
       auth
       cookies/wrap-cookies
       json/wrap-json-response
