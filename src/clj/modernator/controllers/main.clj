@@ -1,7 +1,6 @@
 (ns modernator.controllers.main
   (:require [clojure.walk :refer [keywordize-keys]]
             [ring.util.response :as response]
-            [clj-time.core :as t]
             [digest :refer [digest]]
             [clojure.string :as string]
             [modernator.encrypt :refer [encrypt]]
