@@ -3,6 +3,7 @@
             [modernator.views.main :as views]
             [modernator.controllers.list :as list]
             [modernator.controllers.user :as user]
+            [modernator.controllers.item :as item]
             [modernator.controllers.main :as controller]))
 
 (defroutes router
@@ -13,6 +14,6 @@
   (GET "/confirm-user/:auth-token" [auth-token] (user/activate auth-token))
 
   (GET "/:list" req (views/index req))
-  (GET "/:list/items" req (controller/items-index req))
-  (PUT "/:list/items" req (controller/items-add req))
+  (GET "/:list/items" req (item/index req))
+  (PUT "/:list/items" req (item/add req))
   (PUT "/:list/votes/:item_id" req (controller/vote-toggle req)))
